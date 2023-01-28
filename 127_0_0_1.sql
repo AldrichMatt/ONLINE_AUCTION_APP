@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2023 at 03:06 PM
+-- Generation Time: Jan 28, 2023 at 03:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -127,10 +127,10 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `full_name` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
@@ -188,9 +188,9 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
@@ -235,30 +235,10 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `auction`
---
-ALTER TABLE `auction`
-  ADD CONSTRAINT `auction_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
-  ADD CONSTRAINT `auction_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
-  ADD CONSTRAINT `auction_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `auction_history`
---
-ALTER TABLE `auction_history`
-  ADD CONSTRAINT `auction_history_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
-  ADD CONSTRAINT `auction_history_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `auction_history_ibfk_3` FOREIGN KEY (`auction_id`) REFERENCES `auction` (`auction_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

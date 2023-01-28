@@ -19,9 +19,9 @@ class UserFactory extends Factory
     {
         return [
             'full_name' => fake()->name(),
-            'username' => fake()->unique()->name(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'telephone' => fake()->phoneNumber(),
+            'username' => fake()->unique()->userName(),
+            'password' => '123', // password
+            'telephone' => fake()->phoneNumber()
         ];
     }
 

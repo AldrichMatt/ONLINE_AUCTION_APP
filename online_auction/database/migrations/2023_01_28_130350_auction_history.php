@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        schema::create('auction_history', function (Blueprint $table) {
+        schema::create('auction_histories', function (Blueprint $table) {
             $table->integer('history_id', true);
             $table->integer('auction_id')->index('auction_id');
             $table->integer('item_id')->index('item_id');

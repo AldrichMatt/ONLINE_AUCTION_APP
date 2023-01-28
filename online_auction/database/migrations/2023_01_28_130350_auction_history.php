@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        schema::create('auction_history', function (Blueprint $table) {
+            $table->integer('history_id', true);
+            $table->integer('auction_id')->index('auction_id');
+            $table->integer('item_id')->index('item_id');
+            $table->integer('user_id')->index('user_id');
+            $table->integer('offer_price');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //
     }
 };

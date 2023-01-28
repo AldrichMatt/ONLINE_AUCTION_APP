@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('online_auction', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('full_name');
-            $table->string('username');
-            $table->string('password');
-            $table->int('telephone');
+        schema::create('employee', function (Blueprint $table) {
+            $table->integer('employee_id', true);
+            $table->string('employee_name', 30);
+            $table->string('username', 30)->unique('username');
+            $table->string('password', 30);
+            $table->integer('level');
+
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        
+        //
     }
 };

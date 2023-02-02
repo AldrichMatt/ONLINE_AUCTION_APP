@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home;
 use App\Http\Controllers\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [Login::class, 'LoginShow']);
+Route::get('/', [Home::class, 'HomeShow']);
+Route::get('/login', [Login::class, 'LoginShow']);

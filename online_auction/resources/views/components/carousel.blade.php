@@ -1,21 +1,18 @@
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item z-0 active">
-        <div class="col-lg-12">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <h4 class="text-overlay">lorem</h4>
-            </div>
-            <div class="col-lg-3"></div>
-        </div>
+        <h4 class="text-overlay">Start Bidding</h4>
+        <a href="" class="link-overlay">Explore Offers >></a>
         <img src="{{asset('assets/carousel1.png')}}" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item z-0">
-        <h4 class="text-overlay">lorem</h4>
+        <h4 class="text-overlay">Trusted and Used by the Government</h4>
+        <a href="" class="link-overlay">Our Partners >></a>
         <img src="{{asset('assets/carousel2.png')}}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item z-0">
-        <h4 class="text-overlay">lorem</h4>
+    </div>
+    <div class="carousel-item z-0">
+        <h4 class="text-overlay">Verified by the OJK</h4>
+        <a href="" class="link-overlay">About Us >></a>
         <img src="{{asset('assets/carousel3.png')}}" class="d-block w-100" alt="...">
       </div>
     </div>

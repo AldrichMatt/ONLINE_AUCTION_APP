@@ -8,18 +8,31 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
       <title>Online Auction Web</title>
       <style>
+          body{ 
+              font-size: 2vw;
+        }
         .text-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-left: 50%;
-  padding-top: 25%;
-  font-size: 2rem;
-  font-weight: 100;
-  color: 
-white;
-
-}
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-left: 30%;
+            padding-top: 25%;
+            font-size: 2.5vw;
+            font-weight: 100;
+            color: white;
+        }
+        .link-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-left: 30%;
+            padding-top: 30%;
+            font-size: 2.5vw;
+            font-weight: 100;
+            color: white;
+        }
       </style>
 </head>
 <body>

@@ -8,6 +8,6 @@ class Login extends Controller
 {
     public function LoginShow()
     {
-        return view('login')->with('title',"Login Page");
+        return view('login')->with('title', "Login Page");
     }
 }

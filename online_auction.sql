@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 02:22 AM
+-- Generation Time: Feb 03, 2023 at 02:21 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `online_auction`
 --
-CREATE DATABASE IF NOT EXISTS `online_auction` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `online_auction`;
 
 -- --------------------------------------------------------
 

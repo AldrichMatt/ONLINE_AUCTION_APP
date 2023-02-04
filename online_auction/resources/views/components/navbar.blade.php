@@ -1,9 +1,9 @@
 <nav class="navbar bg-dark">
     <div class="container-fluid">
         
-            <div class="col-lg-3">
-                <a data-bs-toggle="offcanvas" data-bs-target="#Sidebar" aria-controls="Sidebar">
-                    <img class="menu_line" src="{{asset('/assets/three_line.png')}}" alt="logo" width="30px" onclick="" srcset="">
+            <div class="col-lg-4">
+                <a data-bs-toggle="offcanvas" type="button" data-bs-target="#Sidebar" aria-controls="Sidebar">
+                    <img src="{{asset('/assets/three_line.png')}}" alt="logo" width="30px" onclick="" srcset="">
                 </a>
             </div>
               
@@ -18,8 +18,12 @@
                   </div>
                 </div>
               </div>
-            <div class="col-lg-6">2</div>
-            <div class="col-lg-3">4</div>
+            <div class="col-lg-4 d-flex flex-wrap justify-content-center">
+              <a href="#">
+                <img src="{{asset('/assets/logo.png')}}" width="75vw" alt="">
+              </a>
+            </div>
+            <div class="col-lg-4">4</div>
             
         </div>
     </div>

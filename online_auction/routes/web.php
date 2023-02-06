@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/d', [Home::class, 'HomeShow']);
 Route::get('/', [Login::class, 'LoginShow']);
+Route::get('/registration', [Login::class, 'RegistrationShow']);

@@ -23,7 +23,10 @@
                 <img src="{{asset('/assets/logo.png')}}" width="75vw" alt="">
               </a>
             </div>
-            <div class="col-lg-4">4</div>
+            <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">
+              <a href="/signup" class="text-decoration-none text-white h5 px-2">Sign Up </a>
+              <a href="/login" class="text-decoration-none text-white h5 px-2">Log In </a>
+            </div>
             
         </div>
     </div>

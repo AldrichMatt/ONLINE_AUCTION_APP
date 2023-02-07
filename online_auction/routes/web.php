@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/d', [Home::class, 'HomeShow']);
 Route::get('/', [Login::class, 'LoginShow']);
-Route::get('/registration', [Login::class, 'RegistrationShow']);
+Route::get('/login', [Login::class, 'LoginShow']);
+Route::get('/signup', [Login::class, 'RegistrationShow']);
+Route::get('/d', [Home::class, 'HomeShow']);

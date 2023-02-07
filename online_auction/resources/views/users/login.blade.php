@@ -7,6 +7,7 @@
                     <p class="fw-bold">Log In</p>
                 </div>
                 <form action="/log" method="POST" class="d-flex flex-column justify-content-center text-center">
+                    @csrf
                     <div class="mb-4 px-3">
                         <input type="text" name="username" id="username" value="{{@old('username')}}" class="form-control py-3 rounded-4" placeholder="Username">
                         @error('username')

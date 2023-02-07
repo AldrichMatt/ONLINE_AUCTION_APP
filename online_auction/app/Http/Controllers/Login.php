@@ -24,17 +24,7 @@ class Login extends Controller
 
     public function Login(Request $request)
     {
-        $formFields = $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        if (auth()->attempt($formFields)) {
-            $request->session()->regenerate();
-
-            return redirect('/d')->with('message', 'You are now logged in!');
-        }
-
-        return back()->withErrors(['username' => 'Invalid Credentials'])->onlyInput('username');
+        // dd($request);
+        return view('home')->with(['username' => $request->username]);
     }
 }

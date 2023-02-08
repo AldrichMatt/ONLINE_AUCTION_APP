@@ -6,7 +6,9 @@
                 <div class="card-title text-center h2 py-1">
                     <p class="fw-bold">Log In</p>
                 </div>
+                {{ dd(session()) }}
                 <form action="/log" method="POST" class="d-flex flex-column justify-content-center text-center">
+                    @csrf
                     <div class="mb-4 px-3">
                         <input type="text" name="username" id="username" value="{{@old('username')}}" class="form-control py-3 rounded-4" placeholder="Username">
                         @error('username')

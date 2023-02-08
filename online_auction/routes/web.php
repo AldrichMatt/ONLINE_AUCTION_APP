@@ -19,6 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/log', [Login::class, 'Login']);
 Route::get('/login', [Login::class, 'LoginShow']);
 Route::get('/signup', [Login::class, 'RegistrationShow']);
-Route::post('/createuser', [Login::class, '']);
+Route::post('/register', [Login::class, 'register']);
 Route::get('/', [Home::class, 'HomeShow']);
 Route::get('/d', [Home::class, 'HomeShow']);

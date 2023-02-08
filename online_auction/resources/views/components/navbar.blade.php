@@ -1,3 +1,4 @@
+@props(['username'])
 <nav class="navbar bg-dark">
     <div class="container-fluid">
         
@@ -24,8 +25,15 @@
               </a>
             </div>
             <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">
-              <a href="/signup" class="text-decoration-none text-white h5 px-2">Sign Up </a>
-              <a href="/login" class="text-decoration-none text-white h5 px-2">Log In </a>
+              @if ($username == 'Guest')
+                <p class="text-white h5 px-2">{{$username}}</p>
+                <a href="/signup" class="text-decoration-none text-white h5 px-2">Sign Up </a>
+                <a href="/login" class="text-decoration-none text-white h5 px-2">Log In </a>
+              @else
+                <p class="text-white h5 px-2">{{$username}}</p>
+                <a href="/login" class="text-decoration-none text-white h5 px-2">Log Out </a>
+              @endif
+              
             </div>
             
         </div>

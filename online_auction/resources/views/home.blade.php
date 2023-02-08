@@ -1,7 +1,6 @@
 <x-layout>
     {{-- content strart --}}
-    <x-navbar>  
-    </x-navbar>
+    <x-navbar :username="$username"/>
     <x-carousel>
     </x-carousel>
     <div class="container">

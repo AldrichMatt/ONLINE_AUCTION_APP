@@ -8,6 +8,6 @@ class Home extends Controller
 {
     public function HomeShow()
     {
-        return view('home')->with('title',"Homepage");
+        return view('home')->with(['username' => 'Guest']);
     }
 }

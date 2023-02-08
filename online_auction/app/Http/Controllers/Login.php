@@ -20,12 +20,15 @@ class Login extends Controller
 
     public function register(Request $request)
     {
-        $validated = $request->validate([
+        $validator = $request->validate([
             'full_name' => 'required|unique:users',
             'username' => 'required|unique:users',
             'password' => 'required|min:8',
-            'telephone' => 'required|integer'
+            'telephone' => 'required|numeric'
         ]);
+
+        return view('users.login');
+        session()->flash('status', 'Signed Up succesfully please Log In');
     }
 
     public function Login(Request $request)

@@ -20,11 +20,20 @@ class Login extends Controller
 
     public function register(Request $request)
     {
+        $validated = $request->validate([
+            'full_name' => 'required|unique:users',
+            'username' => 'required|unique:users',
+            'password' => 'required|min:8',
+            'telephone' => 'required|integer'
+        ]);
     }
 
     public function Login(Request $request)
     {
         // dd($request);
-        return view('home')->with(['username' => $request->username]);
+        if ($request) {
+
+            return view('home')->with(['username' => $request->username]);
+        }
     }
 }

@@ -31,7 +31,7 @@ class Login extends Controller
         ]);
         User::create($user_data);
 
-        return redirect('/login')->with([
+        return view('users.login')->with([
             'status' => 'Signed Up successfully! Please Log In'
         ]);
     }
@@ -44,11 +44,9 @@ class Login extends Controller
         ]);
 
         $user_data = User::all()->where('username', $login_data['username']);
-        if ($login_data['password'] == $user_data[0]->password) {
-            return redirect('/d')->with([
-                'status' => 'Logged In successfully',
-                'username' => $user_data[0]->username
-            ]);
+        foreach ($user_data as $user) {
+            echo $user->username . "\n";
+            echo $user->password . "\n";
         }
     }
 }

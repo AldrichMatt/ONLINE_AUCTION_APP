@@ -8,6 +8,8 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
+use function PHPUnit\Framework\isEmpty;
+
 class Login extends Controller
 {
     public function LoginShow()
@@ -47,6 +49,16 @@ class Login extends Controller
 
         $user_data = User::all()->where('username', $login_data['username']);
 
+
+
+        if (isEmpty($user_data)) {
+            return view('users.login')->with([
+                'code' => '101',
+                'status' => "Account doesn't exist, please register"
+            ]);
+        }
+
+        echo "fail";
         foreach ($user_data as $user_data) {
             if ($login_data['password'] == $user_data) {
                 return redirect('/d')->with([

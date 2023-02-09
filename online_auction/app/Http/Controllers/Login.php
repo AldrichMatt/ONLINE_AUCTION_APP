@@ -44,9 +44,11 @@ class Login extends Controller
         ]);
 
         $user_data = User::all()->where('username', $login_data['username']);
-        foreach ($user_data as $user) {
-            echo $user->username . "\n";
-            echo $user->password . "\n";
+        if ($login_data['password'] == $user_data[0]->password) {
+            return redirect('/d')->with([
+                'status' => 'Logged In successfully',
+                'username' => $user_data[0]->username
+            ]);
         }
     }
 }

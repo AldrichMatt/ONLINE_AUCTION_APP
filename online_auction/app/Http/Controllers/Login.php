@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class Login extends Controller
@@ -30,18 +31,22 @@ class Login extends Controller
         ]);
         User::create($user_data);
 
-        return view('users.login')->with([
+        return redirect('/login')->with([
             'status' => 'Signed Up successfully! Please Log In'
         ]);
-        // User::('insert into users (user_id, full_name, username, password, telephone) values (?, ?,?,?,?)', [null, $user_data['full_name'], $user_data['username'], $user_data['password'], $user_data['telephone']]);
     }
 
     public function Login(Request $request)
     {
-        // dd($request);
-        if ($request) {
+        $login_data = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-            return view('home')->with(['username' => $request->username]);
+        $user_data = User::all()->where('username', $login_data['username']);
+        foreach ($user_data as $user) {
+            echo $user->username . "\n";
+            echo $user->password . "\n";
         }
     }
 }

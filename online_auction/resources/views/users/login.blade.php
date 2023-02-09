@@ -1,4 +1,3 @@
-@props(['username'])
 <x-loginlayout>
     {{-- content strart --}}
     <div class="container justify-content-center pt-5 my-5">

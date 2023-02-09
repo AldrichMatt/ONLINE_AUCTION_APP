@@ -31,7 +31,7 @@ class Login extends Controller
         ]);
         User::create($user_data);
 
-        return redirect('/login')->with([
+        return view('users.login')->with([
             'code' => '100',
             'status' => 'Signed Up successfully! Please Log In'
         ]);
@@ -52,7 +52,7 @@ class Login extends Controller
                     'username' => $user_data[0]->username
                 ]);
             } else {
-                return redirect('/login')->with([
+                return view('users.login')->with([
                     'code' => '101',
                     'status' => 'Log In Failed, please check your password'
                 ]);

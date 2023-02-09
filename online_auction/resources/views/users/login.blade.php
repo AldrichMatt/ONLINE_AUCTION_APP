@@ -6,11 +6,17 @@
                 <div class="card-title text-center h2 py-1">
                     <p class="fw-bold">Log In</p>
                 </div>
-                {{$status}}
                 @if($status !== null)
+                @if($code == 100){
+
+                    <div class="mb-4 px-3">
+                        <p class="alert alert-success rounded-4">{{ $status }}</p>
+                    </div>
+                }@elseif($code == 101)
                 <div class="mb-4 px-3">
-                    <p class="alert alert-success rounded-4">{{ $status }}</p>
+                    <p class="alert alert-danger rounded-4">{{ $status }}</p>
                 </div>
+                @endif
                 <form action="/log" method="POST" class="d-flex flex-column justify-content-center text-center">
                     @csrf
                     <div class="mb-4 px-3">

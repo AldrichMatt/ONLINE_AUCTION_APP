@@ -11,7 +11,9 @@ class Login extends Controller
 {
     public function LoginShow()
     {
-        return view('users.login');
+        return view('users.login')->with([
+            'status' => null,
+        ]);
     }
     public function RegistrationSHow()
     {
@@ -20,15 +22,18 @@ class Login extends Controller
 
     public function register(Request $request)
     {
-        $validator = $request->validate([
+        $user_data = $request->validate([
             'full_name' => 'required|unique:users',
             'username' => 'required|unique:users',
             'password' => 'required|min:8',
             'telephone' => 'required|numeric'
         ]);
+        User::create($user_data);
 
-        return view('users.login');
-        session()->flash('status', 'Signed Up succesfully please Log In');
+        return view('users.login')->with([
+            'status' => 'Signed Up successfully! Please Log In'
+        ]);
+        // User::('insert into users (user_id, full_name, username, password, telephone) values (?, ?,?,?,?)', [null, $user_data['full_name'], $user_data['username'], $user_data['password'], $user_data['telephone']]);
     }
 
     public function Login(Request $request)

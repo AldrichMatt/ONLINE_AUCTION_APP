@@ -60,10 +60,10 @@ class Login extends Controller
                 ]);
             }
 
-        foreach ($user_data as $user) {
-            echo $user->username . "\n";
-            echo $user->password . "\n";
-
+            foreach ($user_data as $user) {
+                echo $user->username . "\n";
+                echo $user->password . "\n";
+            }
         }
     }
 }

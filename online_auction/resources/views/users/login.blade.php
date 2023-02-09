@@ -6,6 +6,7 @@
                 <div class="card-title text-center h2 py-1">
                     <p class="fw-bold">Log In</p>
                 </div>
+                {{$status}}
                 @if($status !== null)
                 <div class="mb-4 px-3">
                     <p class="alert alert-success rounded-4">{{ $status }}</p>

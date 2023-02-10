@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
 use function PHPUnit\Framework\isEmpty;
@@ -14,6 +15,7 @@ class Login extends Controller
 {
     public function LoginShow()
     {
+        Session::remove('username');
         return view('users.login')->with([
             'status' => null,
         ]);
@@ -49,32 +51,27 @@ class Login extends Controller
 
         $user_data = User::all()->where('username', $login_data['username']);
 
-
-
-        if (isEmpty($user_data)) {
-            return view('users.login')->with([
-                'code' => '101',
-                'status' => "Account doesn't exist, please register"
-            ]);
-        }
-
-        echo "fail";
         foreach ($user_data as $user_data) {
-            if ($login_data['password'] == $user_data) {
-                return redirect('/d')->with([
-                    'status' => 'Logged In successfully',
-                    'username' => $user_data[0]->username
+            if ($login_data['password'] == $user_data['password']) {
+                Session::flash(
+                    'status',
+                    'Logged In successfully',
+                );
+                Session::flash(
+                    'username',
+                    $user_data->username
+                );
+                return redirect('/d');
+            } elseif (empty($user_data) == true) {
+                return view('users.login')->with([
+                    'code' => '101',
+                    'status' => "Account doesn't exist, please register"
                 ]);
             } else {
                 return view('users.login')->with([
                     'code' => '101',
                     'status' => 'Log In Failed, please check your password'
                 ]);
-            }
-
-            foreach ($user_data as $user) {
-                echo $user->username . "\n";
-                echo $user->password . "\n";
             }
         }
     }

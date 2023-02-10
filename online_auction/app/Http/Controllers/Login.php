@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+
+use function PHPUnit\Framework\isEmpty;
 
 class Login extends Controller
 {
     public function LoginShow()
     {
-        return view('users.login');
+        Session::remove('username');
+        return view('users.login')->with([
+            'status' => null,
+        ]);
     }
     public function RegistrationSHow()
     {
@@ -20,23 +27,52 @@ class Login extends Controller
 
     public function register(Request $request)
     {
-        $validator = $request->validate([
+        $user_data = $request->validate([
             'full_name' => 'required|unique:users',
             'username' => 'required|unique:users',
             'password' => 'required|min:8',
             'telephone' => 'required|numeric'
         ]);
+        User::create($user_data);
 
-        return view('users.login');
-        session()->flash('status', 'Signed Up succesfully please Log In');
+        return view('users.login')->with([
+
+            'code' => '100',
+            'status' => 'Signed Up successfully! Please Log In'
+        ]);
     }
 
     public function Login(Request $request)
     {
-        // dd($request);
-        if ($request) {
+        $login_data = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-            return view('home')->with(['username' => $request->username]);
+        $user_data = User::all()->where('username', $login_data['username']);
+
+        foreach ($user_data as $user_data) {
+            if ($login_data['password'] == $user_data['password']) {
+                Session::flash(
+                    'status',
+                    'Logged In successfully',
+                );
+                Session::flash(
+                    'username',
+                    $user_data->username
+                );
+                return redirect('/d');
+            } elseif (empty($user_data) == true) {
+                return view('users.login')->with([
+                    'code' => '101',
+                    'status' => "Account doesn't exist, please register"
+                ]);
+            } else {
+                return view('users.login')->with([
+                    'code' => '101',
+                    'status' => 'Log In Failed, please check your password'
+                ]);
+            }
         }
     }
 }

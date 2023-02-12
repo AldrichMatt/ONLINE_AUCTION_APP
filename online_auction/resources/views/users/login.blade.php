@@ -7,12 +7,12 @@
                     <p class="fw-bold">Log In</p>
                 </div>
                 @if($status !== null)
-                @if($code == 100){
+                @if($code == 100)
 
                     <div class="mb-4 px-3">
                         <p class="alert alert-success rounded-4">{{ $status }}</p>
                     </div>
-                }@elseif($code == 101)
+                @elseif($code == 101)
                 <div class="mb-4 px-3">
                     <p class="alert alert-danger rounded-4">{{ $status }}</p>
                 </div>

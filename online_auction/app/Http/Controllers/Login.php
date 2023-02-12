@@ -15,14 +15,26 @@ class Login extends Controller
 {
     public function LoginShow()
     {
-        Session::remove('username');
-        return view('users.login')->with([
-            'status' => null,
-        ]);
+        $username = Session::get('username');
+        if(isset($username)){
+            Session::reflash();
+            return redirect('/d');
+        }else{
+            return view('users.login')->with([
+                'status' => null,
+            ]);
+
+        }
     }
     public function RegistrationSHow()
     {
-        return view('users.registration');
+        $username = Session::get('username');
+        if(isset($username)){
+            Session::reflash();
+            return redirect('/d');
+        }else{
+            return view('users.registration');
+        }
     }
 
     public function register(Request $request)
@@ -30,7 +42,7 @@ class Login extends Controller
         $user_data = $request->validate([
             'full_name' => 'required|unique:users',
             'username' => 'required|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|alphanum',
             'telephone' => 'required|numeric'
         ]);
         User::create($user_data);
@@ -44,6 +56,8 @@ class Login extends Controller
 
     public function Login(Request $request)
     {
+        
+
         $login_data = $request->validate([
             'username' => 'required',
             'password' => 'required'
@@ -74,5 +88,12 @@ class Login extends Controller
                 ]);
             }
         }
+    }
+
+    public function logout(){
+        Session::remove('username');
+        return view('users.login')->with([
+            'status' => null,
+        ]);
     }
 }

@@ -9,7 +9,7 @@
       <title>Online Auction Web</title>
       <style>
         body{ 
-            font-size: 2vw;
+            font-size: 1.5vw;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }

@@ -15,7 +15,7 @@
                 </div>
                 <div class="offcanvas-body">
                   <div>
-                    I will not close if you click outside of me.
+                    
                   </div>
                 </div>
               </div>
@@ -31,7 +31,7 @@
                 <a href="/login" class="text-decoration-none text-white h5 px-2">Log In </a>
               @else
                 <p class="text-white h5 px-2">{{$username}}</p>
-                <a href="/login" class="text-decoration-none text-white h5 px-2">Log Out </a>
+                <a href="/logout" class="text-decoration-none text-white h5 px-2">Log Out </a>
               @endif
               
             </div>

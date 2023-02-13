@@ -21,5 +21,5 @@ Route::get('/login', [Login::class, 'LoginShow']);
 Route::get('/logout', [Login::class, 'logout']);
 Route::get('/signup', [Login::class, 'RegistrationShow']);
 Route::post('/register', [Login::class, 'register']);
-Route::get('/', [Home::class, 'HomeShow']);
 Route::get('/d', [Home::class, 'HomeShow']);
+Route::get('/', [Home::class, 'HomeShow']);

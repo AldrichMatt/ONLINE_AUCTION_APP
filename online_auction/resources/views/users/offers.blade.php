@@ -9,14 +9,6 @@
                 <div class="h1 fw-semibold">Online Auction Web</div>
                 The Auction Web used, authorized and trusted by the government.
             </div>
-            @if($username == "Guest")
-            <x-login-hero></x-login-hero>
-            @else
-            <div class="text-center">
-
-                <a href="/offers" class="btn py-3 bg-dark w-25 text-white">Offers</a>
-            </div>
-            @endif
         </div>
         <div class="row mb-3">
             <div class="row-lg-3 mb-2">

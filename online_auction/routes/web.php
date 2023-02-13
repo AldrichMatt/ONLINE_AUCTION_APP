@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\Login;
+use App\Http\Controllers\Offer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/log', [Login::class, 'Login']);
 Route::get('/login', [Login::class, 'LoginShow']);
-Route::get('/logout', [Login::class, 'logout']);
+Route::get('/logout', [Login::class, 'Logout']);
+
 Route::get('/signup', [Login::class, 'RegistrationShow']);
-Route::post('/register', [Login::class, 'register']);
+Route::post('/register', [Login::class, 'Register']);
+
 Route::get('/d', [Home::class, 'HomeShow']);
 Route::get('/', [Home::class, 'HomeShow']);
+
+Route::get('/offers', [Offer::class, 'OfferShow']);

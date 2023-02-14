@@ -19,6 +19,8 @@ class ItemFactory extends Factory
     {
         return [
             'item_name' => fake()->word(),
+            'company_name' => fake()->company(),
+            'location' => fake()->word(),
             'input_date' => fake()->date(),
             'initial_price' => fake()->numberBetween(100000, 20000000),
             'description' => fake()->word()

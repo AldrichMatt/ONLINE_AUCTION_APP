@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
       <style>
         body{ 
-            font-size: 1.5vw;
+            font-size: 1em;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }

@@ -64,30 +64,33 @@ class Login extends Controller
         ]);
 
         $user_data = User::all()->where('username', $login_data['username']);
-
-        foreach ($user_data as $user_data) {
-            if ($login_data['password'] == $user_data['password']) {
+        
+        // dd($user_data[0]->username);
+        if (isset($user_data[0]->username) !== true) {
+            return view('users.login')->with([
+                'code' => '101',
+                'status' => "Account doesn't exist, please register"
+            ]);}
+        foreach($user_data as $user){
+            if ($login_data['password'] == $user->password) {
                 Session::flash(
                     'status',
                     'Logged In successfully',
                 );
                 Session::flash(
                     'username',
-                    $user_data->username
+                    $user->username
                 );
                 return redirect('/d');
-            } elseif (empty($user_data) == true) {
-                return view('users.login')->with([
-                    'code' => '101',
-                    'status' => "Account doesn't exist, please register"
-                ]);
-            } else {
+            } 
+                 else {
                 return view('users.login')->with([
                     'code' => '101',
                     'status' => 'Log In Failed, please check your password'
                 ]);
             }
         }
+      
     }
 
     public function logout(){

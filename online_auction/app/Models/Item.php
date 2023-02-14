@@ -15,6 +15,8 @@ class Item extends Authenticatable
 
     protected $fillable = [
         'item_name',
+        'company_name',
+        'location',
         'input_date',
         'initial_price',
         'description'

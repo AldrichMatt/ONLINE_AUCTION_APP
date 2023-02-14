@@ -26,12 +26,12 @@
             </div>
             <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">
               @if ($username == 'Guest')
-                <p class="text-white h5 px-2">{{$username}}</p>
-                <a href="/signup" class="text-decoration-none text-white h5 px-2">Sign Up </a>
-                <a href="/login" class="text-decoration-none text-white h5 px-2">Log In </a>
+                <p class="text-white h6 px-2">{{$username}}</p>
+                <a href="/signup" class="text-decoration-none text-white h6 px-2">Sign Up </a>
+                <a href="/login" class="text-decoration-none text-white h6 px-2">Log In </a>
               @else
-                <p class="text-white h5 px-2">{{$username}}</p>
-                <a href="/logout" class="text-decoration-none text-white h5 px-2">Log Out </a>
+                <p class="text-white h6 px-2">{{$username}}</p>
+                <a href="/logout" class="text-decoration-none text-white h6 px-2">Log Out </a>
               @endif
               
             </div>

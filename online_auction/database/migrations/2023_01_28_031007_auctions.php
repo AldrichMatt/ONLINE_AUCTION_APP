@@ -15,7 +15,6 @@ return new class extends Migration
     {
         schema::create('auctions', function (Blueprint $table) {
             $table->integer('auction_id', true);
-            $table->string('company', 125);
             $table->integer('item_id')->index('item_id');
             $table->date('auction_date');
             $table->integer('final_price');

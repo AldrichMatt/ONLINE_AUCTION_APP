@@ -14,7 +14,7 @@
             @else
             <div class="text-center">
 
-                <a href="" class="btn py-3 bg-dark w-25 text-white">Offers</a>
+                <a href="/offers" class="btn py-3 bg-dark w-25 text-white">Offers</a>
             </div>
             @endif
         </div>

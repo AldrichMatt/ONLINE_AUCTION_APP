@@ -9,6 +9,9 @@
       <title>Online Auction Web</title>
       <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
       <style>
+        a{
+            text-decoration: none;
+        }
         body{ 
             font-size: 1em;
             -ms-overflow-style: none;
@@ -41,7 +44,7 @@
         }
       </style>
 </head>
-<body>
+<body id="top">
    {{ $slot }}
 </body>
 </html>

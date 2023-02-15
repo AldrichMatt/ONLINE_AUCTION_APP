@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('item_name', 30);
             $table->string('company_name', 30);
             $table->string('location', 30);
+            $table->string('image', 256);
             $table->date('input_date');
             $table->integer('initial_price');
             $table->string('description', 160);

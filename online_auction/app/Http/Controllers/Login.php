@@ -65,13 +65,13 @@ class Login extends Controller
 
         $user_data = User::all()->where('username', $login_data['username']);
         
-        // dd($user_data[0]->username);
-        if (isset($user_data[0]->username) !== true) {
-            return view('users.login')->with([
-                'code' => '101',
-                'status' => "Account doesn't exist, please register"
-            ]);}
+        // dd($user_data);
         foreach($user_data as $user){
+            if (isset($user->username) !== true) {
+                return view('users.login')->with([
+                    'code' => '101',
+                    'status' => "Account doesn't exist, please register"
+                ]);}else{
             if ($login_data['password'] == $user->password) {
                 Session::flash(
                     'status',
@@ -90,6 +90,7 @@ class Login extends Controller
                 ]);
             }
         }
+    }
       
     }
 

@@ -2,12 +2,12 @@
     <div class="carousel-inner">
       <div class="carousel-item z-0 active">
         <h4 class="text-overlay">Start Bidding</h4>
-        <a href="" class="link-overlay">Explore Offers >></a>
+        <a href="/offers" class="link-overlay">Explore Offers >></a>
         <img src="{{asset('assets/carousel1.png')}}" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item z-0">
         <h4 class="text-overlay">Trusted and Used by the Government</h4>
-        <a href="" class="link-overlay">Our Partners >></a>
+        <a href="#partner" class="link-overlay">Our Partners >></a>
         <img src="{{asset('assets/carousel2.png')}}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item z-0">

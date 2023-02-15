@@ -1,5 +1,5 @@
 @props(['username'])
-<nav class="navbar bg-dark">
+<nav class="autohide navbar bg-dark sticky-top">
     <div class="container-fluid">
         
             <div class="col-lg-4">
@@ -15,12 +15,19 @@
                 </div>
                 <div class="offcanvas-body">
                   <div>
-                    
+                    <div class="h1 fw-semibold">
+                      <a class="text-black" href="/d">Home</a>
+                  </div>
+                  <hr>
+                  <div class="h1 fw-semibold">
+                    <a class="text-black" href="/offers">Offers</a>
+                  </div>
+                  <hr>
                   </div>
                 </div>
               </div>
             <div class="col-lg-4 d-flex flex-wrap justify-content-center">
-              <a href="#">
+              <a href="#top">
                 <img src="{{asset('/assets/logo.png')}}" width="75vw" alt="">
               </a>
             </div>

@@ -21,7 +21,7 @@ class ItemFactory extends Factory
             'item_name' => fake()->word(),
             'company_name' => fake()->company(),
             'location' => fake()->word(),
-            'image' => fake()->image(),
+            'image' => "/assets/logo-dark.png",
             'input_date' => fake()->date(),
             'initial_price' => fake()->numberBetween(100000, 20000000),
             'description' => fake()->word()

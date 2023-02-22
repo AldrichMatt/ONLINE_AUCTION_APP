@@ -24,7 +24,7 @@ class ItemFactory extends Factory
             'image' => "/assets/logo-dark.png",
             'input_date' => fake()->date(),
             'initial_price' => fake()->numberBetween(100000, 20000000),
-            'description' => fake()->paragraph(5)
+            'description' => fake()->word()
         ];
     }
 }

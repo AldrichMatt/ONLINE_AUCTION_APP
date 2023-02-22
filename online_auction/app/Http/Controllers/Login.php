@@ -13,7 +13,6 @@ use function PHPUnit\Framework\isEmpty;
 
 class Login extends Controller
 {
-    
     public function LoginShow()
     {
         $username = Session::get('username');
@@ -84,7 +83,6 @@ class Login extends Controller
                     'status' => 'Log In Failed, please check your password'
                 ]);
             }
-            
     }
     return view('users.login')->with([
         'code' => '101',

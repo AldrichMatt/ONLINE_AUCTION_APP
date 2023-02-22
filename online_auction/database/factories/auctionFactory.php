@@ -20,7 +20,9 @@ class auctionFactory extends Factory
         return [
             'item_id' => fake()->numberBetween(0,10),
             'auction_date' => fake()->date(),
-            'starting_price' => fake()->numberBetween(100000, 20000000),
+            'final_price' => fake()->numberBetween(100000, 20000000),
+            'user_id' => fake()->numberBetween(0,10),
+            'employee_id' => fake()->numberBetween(0,10),
             'status' => fake()->numberBetween(0,1)
         ];
     }

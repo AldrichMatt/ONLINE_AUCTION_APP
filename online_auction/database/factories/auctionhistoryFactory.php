@@ -21,8 +21,7 @@ class auctionhistoryFactory extends Factory
             'auction_id' => fake()->numberBetween(0,10),
             'item_id' => fake()->numberBetween(0, 10),
             'user_id' => fake()->numberBetween(0,10),
-            'report_date' => fake()->dateTime(),
-            'sold_price' => fake()->numberBetween(100000, 20000000)
+            'offer_price' => fake()->numberBetween(100000, 20000000)
         ];
     }
 }

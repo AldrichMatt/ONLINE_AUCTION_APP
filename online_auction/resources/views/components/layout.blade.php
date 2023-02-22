@@ -8,6 +8,7 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
       <title>Online Auction Web</title>
       <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+      @yield('ajax')
       <style>
         a{
             text-decoration: none;

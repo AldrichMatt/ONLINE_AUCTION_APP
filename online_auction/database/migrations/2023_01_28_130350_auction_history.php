@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('auction_id')->index('auction_id');
             $table->integer('item_id')->index('item_id');
             $table->integer('user_id')->index('user_id');
-            $table->integer('offer_price');
+            $table->dateTime('report_date');
+            $table->integer('sold_price');
         });
     }
 

@@ -28,7 +28,7 @@
               </div>
             <div class="col-lg-4 d-flex flex-wrap justify-content-center">
               <a href="#top">
-                <img src="{{asset('/assets/logo.png')}}" width="75vw" alt="">
+                <img src="{{asset('/assets/logo.png')}}" width="45vw" alt="">
               </a>
             </div>
             <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">

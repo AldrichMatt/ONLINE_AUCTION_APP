@@ -16,7 +16,7 @@ class RunningOffer extends Model
         'auction_id',
         'item_id',
         'user_id',
-        'offer_date',
+        'offer_datetime',
         'offer_price'
     ];
 }

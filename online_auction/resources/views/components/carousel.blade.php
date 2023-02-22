@@ -12,7 +12,7 @@
     </div>
     <div class="carousel-item z-0">
         <h4 class="text-overlay">Verified by the OJK</h4>
-        <a href="" class="link-overlay">About Us >></a>
+        <a href="#aboutus" class="link-overlay">About Us >></a>
         <img src="{{asset('assets/carousel3.png')}}" class="d-block w-100" alt="...">
       </div>
     </div>

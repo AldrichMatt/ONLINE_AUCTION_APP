@@ -11,11 +11,9 @@ class AuctionHistory extends Model
     const CREATED_AT = null;
     use HasFactory;
     protected $fillable = [
-        'history_id', //history is auction id + item id + ddmmyyy
         'auction_id',
         'item_id',
         'user_id',
-        'report_date',
-        'sold_price'
+        'offer_price'
     ];
 }

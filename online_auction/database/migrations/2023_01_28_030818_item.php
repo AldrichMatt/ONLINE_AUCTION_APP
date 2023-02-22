@@ -16,12 +16,12 @@ return new class extends Migration
         schema::create('items', function (Blueprint $table) {
             $table->integer('item_id', true);
             $table->string('item_name', 30);
-            $table->string('company_name', 150);
+            $table->string('company_name', 30);
             $table->string('location', 30);
             $table->string('image', 256);
             $table->date('input_date');
             $table->integer('initial_price');
-            $table->mediumText('description');
+            $table->string('description', 160);
         });
     }
 

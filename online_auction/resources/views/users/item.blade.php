@@ -1,12 +1,15 @@
 <x-layout>
     {{-- content start --}}
     <x-navbar :username="$username"/>
+    @section('ajax')
+    <script src="{{asset('js/offer_ajax.js')}}"></script>  
+    @endsection
+    @section('csrf')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endsection
     
     
     <div class="container my-5">
-        @section('ajax')
-        <script src="{{asset('js/offer_ajax.js')}}"></script>  
-        @endsection
         @foreach ($item as $item)
         <strong><a href="/offers" class="text-dark text-decoration-underline"><- Offers</a></strong>
         <div class="row">
@@ -57,7 +60,7 @@
                       </div>
                     </div>
                     <div class="col-4">
-                        <button type="submit" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
+                        <button type="submit" id="bid" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
                     </div>
                 </form>
                 </div>

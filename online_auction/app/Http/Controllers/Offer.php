@@ -62,6 +62,7 @@ class Offer extends Controller
                 'auction' => $auction_data,
                 'username' => $username,
                 'user' => $user_data,
+                'status' =>  ''
             ]);
         }
     }
@@ -103,7 +104,7 @@ class Offer extends Controller
             $offer_data = [
                 'auction_id' => $auction_id,
                 'user_id' => $user_id,
-                'offer_datetime' => now("utc"),
+                'offer_datetime' => now(),
                 'offer_price' => $request->offer_price
             ];
             RunningOffer::create($offer_data);

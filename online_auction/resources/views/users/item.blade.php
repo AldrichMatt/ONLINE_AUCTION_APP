@@ -8,7 +8,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @endsection
     
-    
     <div class="container my-5">
         @foreach ($item as $item)
         <strong><a href="/offers" class="text-dark text-decoration-underline"><- Offers</a></strong>
@@ -67,6 +66,27 @@
             </div>
         </div>
     </div>
-
-    @endforeach 
+    @if($status !== '')
+    <div class="modal-backdrop bg-light show text-center align-items-center" role="dialog" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false"> 
+        <div class="modal-dialog">
+        <div class="modal-content">
+            @switch($status)
+                @case("success")
+                    <img src="{{asset('assets/success-bubble.png')}}" alt="" srcset="">
+                    @break
+                @case("fail")
+                    
+                    @break
+                @default
+                    
+            @endswitch
+        </div>
+        </div>
+    </div>
+    @else
+    @endif
+</div>
+</div>
+    
+@endforeach 
 </x-layout>

@@ -44,8 +44,8 @@
                     <div class="row">
                         <strong style="font-size:75%" class="ms-4 ps-4">Your Bid</strong>
                     <div class="col-8">
-                        <form action="/offer/bid/{{$auction->auction_id}}/{{$user->user_id}}" method="POST">
-                            @csrf
+                <form action="/offer/bid/{{$auction->auction_id}}/{{$user->user_id}}" method="POST">
+                    @csrf
                     <div class="input-group w-100">
                         <span class="input-group-text border-0 rounded-0 bg-white fw-bold">$</span>
                         <input type="number" name="offer_price" class="form-control border-light border-0 rounded-0 border-bottom border-dark" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
@@ -59,7 +59,7 @@
                       </div>
                     </div>
                     <div class="col-4">
-                        <button type="submit" id="bid" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
+                        <button type="button" id="bid" onclick="test()" data-bs-toggle="modal" data-bs-target="#exampleModalLive" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
                     </div>
                 </form>
                 </div>
@@ -69,25 +69,16 @@
     @if($status !== '')
 
             @switch($status)
-                @case("success")
-                    <div class="modal-backdrop bg-light show text-center align-items-center" role="" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false"> 
-                        <div class="modal">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <img src="{{asset('assets/success-bubble.png')}}" alt="" srcset="">
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    @break
-                @case("fail")
-                    
-                    @break
-                @default
-                    
-            @endswitch
+                @case("success")  
+    Bid placed successfully
+    @break
+    @case("fail")
+    
+    Failed to place bid
+        @break
+    @default
         
+@endswitch
     </div>
     @else
     @endif

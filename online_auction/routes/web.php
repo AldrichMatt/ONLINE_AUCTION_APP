@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home;
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Offer;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/admin', [Admin::class, 'LoginShow']);
+
+Route::post('/admin/log', [Admin::class, 'Login']);
+Route::get('/admin/login', [Admin::class, 'LoginShow']);
+Route::get('/logout', [Admin::class, 'Logout']);
+
+Route::get('/admin/d', [Admin::class, 'DashboardShow']);
+
+Route::get('/admin/signup', [Admin::class, 'RegistrationShow']);
+Route::post('/admin_register', [Admin::class, 'Register']);
 
 Route::post('/log', [Login::class, 'Login']);
 Route::get('/login', [Login::class, 'LoginShow']);

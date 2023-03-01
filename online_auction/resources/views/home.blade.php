@@ -24,7 +24,7 @@
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum eaque odio expedita eveniet fuga pariatur voluptas, odit atque illum. Tempora accusantium saepe laborum obcaecati voluptatibus. Nihil libero consectetur sint facilis accusamus harum quidem voluptatem earum.
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3" id="partner">
             <div class="row-lg-3 mb-2 justify-content-center">
                 <div class="h1 fw-semibold">Our Partners</div>
                <img src="{{asset('assets/partner-1.jpg')}}" width="15%" alt="partner-1" srcset="">

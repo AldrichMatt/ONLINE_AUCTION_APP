@@ -14,6 +14,7 @@ class Item extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
+        'item_id',
         'item_name',
         'company_name',
         'location',

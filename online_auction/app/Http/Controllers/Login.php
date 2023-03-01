@@ -13,27 +13,26 @@ use function PHPUnit\Framework\isEmpty;
 
 class Login extends Controller
 {
-    
+
     public function LoginShow()
     {
         $username = Session::get('username');
-        if(isset($username)){
+        if (isset($username)) {
             Session::reflash();
             return redirect('/d');
-        }else{
+        } else {
             return view('users.login')->with([
                 'status' => null,
             ]);
-
         }
     }
     public function RegistrationSHow()
     {
         $username = Session::get('username');
-        if(isset($username)){
+        if (isset($username)) {
             Session::reflash();
             return redirect('/d');
-        }else{
+        } else {
             return view('users.registration');
         }
     }
@@ -57,7 +56,7 @@ class Login extends Controller
 
     public function Login(Request $request)
     {
-        
+
 
         $login_data = $request->validate([
             'username' => 'required',
@@ -65,8 +64,8 @@ class Login extends Controller
         ]);
 
         $user_data = User::all()->where('username', $login_data['username']);
-        
-        foreach($user_data as $user){
+
+        foreach ($user_data as $user) {
             if ($login_data['password'] == $user->password) {
                 Session::flash(
                     'status',
@@ -77,22 +76,21 @@ class Login extends Controller
                     $user->username
                 );
                 return redirect('/d');
-            } 
-                 else {
+            } else {
                 return view('users.login')->with([
                     'code' => '101',
                     'status' => 'Log In Failed, please check your password'
                 ]);
             }
-            
-    }
-    return view('users.login')->with([
-        'code' => '101',
-        'status' => "Account doesn't exist, please register"
-    ]);
+        }
+        return view('users.login')->with([
+            'code' => '101',
+            'status' => "Account doesn't exist, please register"
+        ]);
     }
 
-    public function logout(){
+    public function logout()
+    {
         Session::remove('username');
         return view('users.login')->with([
             'status' => null,

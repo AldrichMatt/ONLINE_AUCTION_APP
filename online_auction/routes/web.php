@@ -27,7 +27,8 @@ Route::post('/register', [Login::class, 'Register']);
 Route::get('/d', [Home::class, 'HomeShow']);
 Route::get('/', [Home::class, 'HomeShow']);
 
-Route::get('/offers', [Offer::class, 'OfferShow']); 
+Route::get('/offers', [Offer::class, 'OfferShow']);
 Route::post('/offer/bid/{auction_id}/{user_id}', [Offer::class, 'Bid']);
+// Route::get('/offer/bid/{auction_id}/{user_id}', [Offer::class, 'Bid']);
 
 Route::get('/item/{item_id}', [Offer::class, 'SingleItemShow']);

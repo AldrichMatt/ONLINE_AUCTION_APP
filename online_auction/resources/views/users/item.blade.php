@@ -1,12 +1,6 @@
 <x-layout>
     {{-- content start --}}
     <x-navbar :username="$username"/>
-    @section('ajax')
-    <script src="{{asset('js/offer_ajax.js')}}"></script>  
-    @endsection
-    @section('csrf')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @endsection
     
     <div class="container my-5 modal-open">
         @foreach ($item as $item)
@@ -44,22 +38,20 @@
                     <div class="row">
                         <strong style="font-size:75%" class="ms-4 ps-4">Your Bid</strong>
                     <div class="col-8">
-                <form action="/offer/bid/{{$auction->auction_id}}/{{$user->user_id}}" method="POST">
+                <form action="/offer/bid/{{$auction->auction_id}}/{{$user->user_id}}" method="POST" id="bid_form">
                     @csrf
                     <div class="input-group w-100">
                         <span class="input-group-text border-0 rounded-0 bg-white fw-bold">$</span>
-                        <input type="number" name="offer_price" class="form-control border-light border-0 rounded-0 border-bottom border-dark" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
-                        @if(isset($status))
-                        <p class="text-dark">{{$status}}</p>
+                        <input type="number" value="{{old('offer_price')}}" name="offer_price" class="form-control border-light border-0 rounded-0 border-bottom border-dark" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                        @if (Session::has('message'))
+                            <div class="small text-dark">
+                                {{ Session::get('message')}}
+                                </div>
                         @endif
-
-                        @error('offer_price')
-                        <p class="text-dark">{{$message}}</p>
-                        @enderror
                       </div>
                     </div>
                     <div class="col-4">
-                        <button type="button" id="bid" onclick="test()" data-bs-toggle="modal" data-bs-target="#exampleModalLive" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
+                        <button type="submit" id="bid"  data-bs-toggle="modal" data-bs-target="#exampleModalLive" class="btn btn-dark px-5 mx-auto w-100">Bid</button>
                     </div>
                 </form>
                 </div>

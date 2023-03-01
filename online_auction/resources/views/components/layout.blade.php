@@ -9,10 +9,9 @@
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      @yield('csrf')
       <title>Online Auction Web</title>
       <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-      @yield('ajax')
+      @yield('script')
       <style>
         a{
             text-decoration: none;

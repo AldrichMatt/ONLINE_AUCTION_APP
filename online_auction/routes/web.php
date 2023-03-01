@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin', [Admin::class, 'LoginShow']);
+
 Route::post('/log', [Login::class, 'Login']);
 Route::get('/login', [Login::class, 'LoginShow']);
 Route::get('/logout', [Login::class, 'Logout']);

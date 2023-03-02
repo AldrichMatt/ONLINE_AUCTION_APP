@@ -79,9 +79,9 @@ class Offer extends Controller
             $auction_data = $a;
         }
         $item_id = $auction_data->item_id;
-        $item = Item::all()->where('item_id', $item_id);
-        foreach ($item as $item) {
-            $item = $item;
+        $item_data = Item::all()->where('item_id', $item_id);
+        foreach ($item_data as $item) {
+            $item = $item_data;
         };
         $offer_request = $request->all();
         $offer_price = (int)$offer_request['offer_price'];

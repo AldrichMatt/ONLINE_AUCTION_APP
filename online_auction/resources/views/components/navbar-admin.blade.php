@@ -1,4 +1,5 @@
 @props(['username'])
+@props(['level'])
 <nav class="autohide navbar bg-dark sticky-top">
   <div class="container-fluid">
 
@@ -23,14 +24,22 @@
             <a class="text-black" href="/admin/item">Item Menu</a>
           </div>
           <hr>
+          @if($level == 1)
           <div class="h1 fw-semibold">
             <a class="text-black" href="/admin/auction">Auction Menu</a>
           </div>
           <hr>
+          @endif
+          @if($level == 2)
           <div class="h1 fw-semibold">
             <a class="text-black" href="/admin/user">User Menu</a>
           </div>
           <hr>
+          <div class="h1 fw-semibold">
+            <a class="text-black" href="/admin/user">Employee Menu</a>
+          </div>
+          <hr>
+          @endif
           <div class="h1 fw-semibold">
             <a class="text-black" href="/admin/transaction">Transaction Menu</a>
           </div>
@@ -44,13 +53,12 @@
       </a>
     </div>
     <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">
-      @if ($username == 'Guest')
-      <p class="text-white h6 px-2">{{$username}}</p>
-      <a href="/signup" class="text-decoration-none text-white h6 px-2">Sign Up </a>
-      <a href="/login" class="text-decoration-none text-white h6 px-2">Log In </a>
+      @if ($level == 2)
+      <p class="text-white h6 px-2">Admin {{$username}}</p>
+      <a href="/admin/logout" class="text-decoration-none text-white h6 px-2">Log Out </a>
       @else
-      <p class="text-white h6 px-2">{{$username}}</p>
-      <a href="/logout" class="text-decoration-none text-white h6 px-2">Log Out </a>
+      <p class="text-white h6 px-2">Employee {{$username}}</p>
+      <a href="/admin/logout" class="text-decoration-none text-white h6 px-2">Log Out </a>
       @endif
 
     </div>

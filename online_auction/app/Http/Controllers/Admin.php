@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -76,6 +77,10 @@ class Admin extends Controller
                         'username',
                         $employee->username
                     );
+                    Session::flash(
+                        'level',
+                        $employee->level
+                    );
                     return redirect('/admin/d');
                 } else {
                     return view('admin.login')->with([
@@ -99,6 +104,7 @@ class Admin extends Controller
     public function logout()
     {
         Session::remove('username');
+        Session::remove('level');
         return view('admin.login')->with([
             'status' => null,
         ]);
@@ -107,11 +113,49 @@ class Admin extends Controller
     public function DashboardShow()
     {
         $username = Session::get('username');
+        $level = Session::get('level');
         Session::reflash();
         if (isset($username) == true) {
-            return view('admin.home')->with(['username' => $username]);
+            return view('admin.home')->with(['username' => $username, 'level' => $level]);
         } else {
-            return view('admin.home')->with(['username' => 'Guest']);
+            return redirect('/admin');
+        }
+    }
+    
+    public function ItemShow(){
+        $username = Session::get('username');
+        $level = Session::get('level');
+        $items = Item::all();
+        Session::reflash();
+        if (isset($username) == true && isset($level) == true) {
+            return view('admin.items')->with([
+                'username' => $username, 
+                'level' => $level, 
+                'items' => $items
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+
+    public function DeleteSubject(Request $request, $subject_name, $subject_id){
+        switch ($subject_name) {
+            case 'item':
+                Session::reflash();
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                Item::where('item_id', '=', $subject_id)->delete();
+                return redirect('/admin/item');
+            case 'auction':
+                // dd("Deleting Auction");
+                break;
+            
+            case 'user':
+                // dd("Deleting User");
+                break;
+            
+            case 'employee':
+                // dd("Deleting Employee");
+                break;
         }
     }
 }

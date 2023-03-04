@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auction;
 use App\Models\Employee;
 use App\Models\Item;
+use App\Models\RunningOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -132,6 +134,46 @@ class Admin extends Controller
                 'username' => $username, 
                 'level' => $level, 
                 'items' => $items
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+
+    public function SingleItemShow($item_id)
+    {
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        $auction = Auction::all()->where('item_id', $item_id);
+        $item = Item::all()->where('item_id', $item_id);
+        $auction_data = [];
+        $user_data = [];
+        $offer = [];
+
+        foreach ($auction as $a) {
+            $auction_data = $a;
+        }
+        $auction_id = $auction_data->auction_id;
+        $running_offer = RunningOffer::all()->where('auction_id', $auction_id);
+        foreach ($running_offer as $r) {
+            $offer = $r;
+        }
+        $user = User::all()->where('username', $username);
+        foreach ($user as $user) {
+            $user_data = $user;
+        }
+        if (isset($username) == true && isset($level) == true) {
+            Session::reflash();
+            // dd($auction);
+            return view('admin.item', [
+                'offer' => $offer,
+                'item' => $item,
+                'auction' => $auction_data,
+                'username' => $username,
+                'level' => $level,
+                'user' => $user_data,
+                'status' =>  ''
             ]);
         } else {
             return redirect('/admin/d');

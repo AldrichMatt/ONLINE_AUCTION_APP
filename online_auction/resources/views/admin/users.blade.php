@@ -4,35 +4,31 @@
     <div class="container">
         <div class="row my-2">
             <div class="h1 fw-semibold">
-                Auctions
+                Users
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4">
-            @unless(count($auctions) == 0)
+            @unless(count($users) == 0)
             <table class="table  table-striped">
                 <thead class="bg-dark text-white">
-                        <th>Auction Id</th>
-                        <th>Item Name</th>
-                        <th>Item Image</th>
-                        <th>Starting date</th>
-                        <th>Initial Price</th>
-                        <th>Starting Price</th>
+                        <th>Id</th>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Telephone</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        @foreach ($auctions as $auctions)
+                        @foreach ($users as $users)
                         
                             <tr>
-                                <td>{{$auctions->auction_id}}</td>
-                                <td>{{$auctions->item_name}}</td>   
-                                <td><img src="{{asset("$auctions->image")}}" alt="Image" srcset=""></td>
-                                <td>{{$auctions->auction_date}}</td>
-                                <td>{{$auctions->initial_price}}</td>
-                                <td>{{$auctions->starting_price}}</td>
+                                <td>{{$users->user_id}}</td>
+                                <td>{{$users->full_name}}</td>
+                                <td>{{$users->username}}</td>
+                                <td>{{$users->telephone}}</td>
                                 <td>
-                                    <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
-                                    <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/user/{{$users->user_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
+                                    <a href="/admin/delete/user/{{$users->user_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
+                                    <a href="/admin/update/user/{{$users->user_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         
@@ -40,7 +36,7 @@
                     </tbody>
                 </table>
             @else
-            <p>No Auctions Found</p>
+            <p>No Users Found</p>
             @endunless
         </div>
     </div>

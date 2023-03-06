@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
@@ -23,7 +24,7 @@ class Admin extends Controller
         $username = Session::get('username');
         if (isset($username)) {
             Session::reflash();
-            return redirect('/d');
+            return redirect('/admin/d');
         } else {
             return view('admin.login')->with([
                 'status' => null,
@@ -123,17 +124,72 @@ class Admin extends Controller
             return redirect('/admin');
         }
     }
-    
-    public function ItemShow(){
+
+    public function ItemShow()
+    {
         $username = Session::get('username');
         $level = Session::get('level');
         $items = Item::all();
         Session::reflash();
         if (isset($username) == true && isset($level) == true) {
             return view('admin.items')->with([
-                'username' => $username, 
-                'level' => $level, 
+                'username' => $username,
+                'level' => $level,
                 'items' => $items
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+
+    public function UserShow()
+    {
+        $username = Session::get('username');
+        $level = Session::get('level');
+        $users = User::all();
+        Session::reflash();
+        if (isset($username) == true && isset($level) == true) {
+            return view('admin.users')->with([
+                'username' => $username,
+                'level' => $level,
+                'users' => $users
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+
+    public function EmployeeShow()
+    {
+        $username = Session::get('username');
+        $level = Session::get('level');
+        $employees = Employee::all();
+        Session::reflash();
+        if (isset($username) == true && isset($level) == true) {
+            return view('admin.employees')->with([
+                'username' => $username,
+                'level' => $level,
+                'employees' => $employees
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+
+    public function AuctionShow()
+    {
+        $username = Session::get('username');
+        $level = Session::get('level');
+        $auctions = DB::select("SELECT auctions.auction_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
+        FROM auctions
+        INNER JOIN items
+        ON auctions.item_id = items.item_id");
+        Session::reflash();
+        if (isset($username) == true && isset($level) == true) {
+            return view('admin.auctions')->with([
+                'username' => $username,
+                'level' => $level,
+                'auctions' => $auctions
             ]);
         } else {
             return redirect('/admin/d');
@@ -180,23 +236,32 @@ class Admin extends Controller
         }
     }
 
-    public function DeleteSubject(Request $request, $subject_name, $subject_id){
+    public function DeleteSubject(Request $request, $subject_name, $subject_id)
+    {
+        Session::reflash();
         switch ($subject_name) {
             case 'item':
-                Session::reflash();
                 echo "<script>alert('Your action is irrevirsible')</script>";
                 Item::where('item_id', '=', $subject_id)->delete();
                 return redirect('/admin/item');
+                break;
+
             case 'auction':
-                // dd("Deleting Auction");
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                Auction::where('auction_id', '=', $subject_id)->delete();
+                return redirect('/admin/auction');
                 break;
-            
+
             case 'user':
-                // dd("Deleting User");
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                User::where('user_id', '=', $subject_id)->delete();
+                return redirect('/admin/user');
                 break;
-            
+
             case 'employee':
-                // dd("Deleting Employee");
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                Employee::where('employee_id', '=', $subject_id)->delete();
+                return redirect('/admin/employee');
                 break;
         }
     }

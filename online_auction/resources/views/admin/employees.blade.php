@@ -4,35 +4,31 @@
     <div class="container">
         <div class="row my-2">
             <div class="h1 fw-semibold">
-                Auctions
+                Employees
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4">
-            @unless(count($auctions) == 0)
+            @unless(count($employees) == 0)
             <table class="table  table-striped">
                 <thead class="bg-dark text-white">
-                        <th>Auction Id</th>
-                        <th>Item Name</th>
-                        <th>Item Image</th>
-                        <th>Starting date</th>
-                        <th>Initial Price</th>
-                        <th>Starting Price</th>
+                        <th>Id</th>
+                        <th>Employee Name</th>
+                        <th>Username</th>
+                        <th>Level</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        @foreach ($auctions as $auctions)
+                        @foreach ($employees as $employees)
                         
                             <tr>
-                                <td>{{$auctions->auction_id}}</td>
-                                <td>{{$auctions->item_name}}</td>   
-                                <td><img src="{{asset("$auctions->image")}}" alt="Image" srcset=""></td>
-                                <td>{{$auctions->auction_date}}</td>
-                                <td>{{$auctions->initial_price}}</td>
-                                <td>{{$auctions->starting_price}}</td>
+                                <td>{{$employees->employee_id}}</td>
+                                <td>{{$employees->employee_name}}</td>
+                                <td>{{$employees->username}}</td>
+                                <td>{{$employees->level}}</td>
                                 <td>
-                                    <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
-                                    <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/employee/{{$employees->employee_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
+                                    <a href="/admin/delete/employee/{{$employees->employee_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
+                                    <a href="/admin/update/employee/{{$employees->employee_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         
@@ -40,7 +36,7 @@
                     </tbody>
                 </table>
             @else
-            <p>No Auctions Found</p>
+            <p>No Employees Found</p>
             @endunless
         </div>
     </div>

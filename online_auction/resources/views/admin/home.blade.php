@@ -6,9 +6,9 @@
             <div class="row-lg-3 mb-4">
                 <div class="h1 fw-semibold">Dashboard</div>
                 @If($level == 1)
-                <p>Welcome employee {{$username}}</p>
+                <p>Welcome Employee {{$username}}</p>
                 @else 
-                <p>Welcome admin {{$username}}</p>
+                <p>Welcome Admin {{$username}}</p>
                 @endif
             </div>
         </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-2">
                 <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
-                    <a class="text-dark" href="/admin/user">
+                    <a class="text-dark" href="/admin/employee">
                     <div class="card-body">
                         <img src="{{asset('assets/logo-dark.png')}}" class="card-img p-4" alt="" srcset="">
                        <p>Employee Menu</p>
@@ -56,16 +56,6 @@
                 </div>
             </div>
             @endif
-            <div class="col-2">
-                <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
-                    <a class="text-dark" href="/admin/transaction">
-                    <div class="card-body">
-                        <img src="{{asset('assets/logo-dark.png')}}" class="card-img p-4" alt="" srcset="">
-                       <p>Transaction Menu</p>
-                    </div>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </x-layout>

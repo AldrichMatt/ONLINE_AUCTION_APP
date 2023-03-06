@@ -11,9 +11,14 @@ class Home extends Controller
     public function HomeShow()
     {
         $username = Session::get('username');
+        $level = Session::get('level');
         Session::reflash();
         // dd($username);
-        if (isset($username) == true) {
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if (isset($username) == true) {
+            Session::reflash();
             return view('home')->with(['username' => $username]);
         } else {
             return view('home')->with(['username' => 'Guest']);

@@ -36,14 +36,14 @@
           </div>
           <hr>
           <div class="h1 fw-semibold">
-            <a class="text-black" href="/admin/user">Employee Menu</a>
+            <a class="text-black" href="/admin/employee">Employee Menu</a>
+          </div>
+          <hr>
+          <div class="h1 fw-semibold">
+            <a class="text-black" href="/admin/auction">Auction Menu</a>
           </div>
           <hr>
           @endif
-          <div class="h1 fw-semibold">
-            <a class="text-black" href="/admin/transaction">Transaction Menu</a>
-          </div>
-          <hr>
         </div>
       </div>
     </div>

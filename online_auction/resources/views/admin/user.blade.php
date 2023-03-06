@@ -4,35 +4,33 @@
     <div class="container">
         <div class="row my-2">
             <div class="h1 fw-semibold">
-                Auctions
+                Items
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4">
-            @unless(count($auctions) == 0)
+            @unless(count($items) == 0)
             <table class="table  table-striped">
                 <thead class="bg-dark text-white">
-                        <th>Auction Id</th>
-                        <th>Item Name</th>
-                        <th>Item Image</th>
-                        <th>Starting date</th>
-                        <th>Initial Price</th>
-                        <th>Starting Price</th>
+                        <th>Id</th>
+                        <th>Image</th>
+                        <th>Item name</th>
+                        <th>Company & location</th>
+                        <th>Item Price</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        @foreach ($auctions as $auctions)
+                        @foreach ($items as $items)
                         
                             <tr>
-                                <td>{{$auctions->auction_id}}</td>
-                                <td>{{$auctions->item_name}}</td>   
-                                <td><img src="{{asset("$auctions->image")}}" alt="Image" srcset=""></td>
-                                <td>{{$auctions->auction_date}}</td>
-                                <td>{{$auctions->initial_price}}</td>
-                                <td>{{$auctions->starting_price}}</td>
+                                <td>{{$items->item_id}}</td>
+                                <td><img src="{{asset("$items->image")}}" alt="" srcset=""></td>
+                                <td>{{$items->item_name}}</td>
+                                <td>{{$items->company_name}}<br/> <img src="{{asset('assets/map-pin.svg')}}" alt="location pin" height="15px" srcset=""> {{ $items->location}}</td>
+                                <td>{{$items->initial_price}}</td>
                                 <td>
-                                    <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
-                                    <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/item/{{$items->item_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
+                                    <a href="/admin/delete/item/{{$items->item_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
+                                    <a href="/admin/update/item/{{$items->item_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         
@@ -40,7 +38,7 @@
                     </tbody>
                 </table>
             @else
-            <p>No Auctions Found</p>
+            <p>No Items Found</p>
             @endunless
         </div>
     </div>

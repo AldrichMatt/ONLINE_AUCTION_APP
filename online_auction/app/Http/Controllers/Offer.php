@@ -20,10 +20,15 @@ class Offer extends Controller
         $items = Item::all();
 
         $username = Session::get('username');
-        if ($username ==  null || $username == 'Guest') {
+        $level = Session::get('level');
+
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if ($username ==  null || $username == 'Guest') {
+            Session::reflash();
             return redirect('/login');
         } else {
-            Session::reflash();
             return view('users.offers')->with([
                 'username' => $username,
                 'items' => $items
@@ -35,6 +40,7 @@ class Offer extends Controller
     {
         Session::reflash();
         $username = Session::get('username');
+        $level = Session::get('level');
         $auction = Auction::all()->where('item_id', $item_id);
         $item = Item::all()->where('item_id', $item_id);
         $auction_data = [];
@@ -53,11 +59,14 @@ class Offer extends Controller
         foreach ($user as $user) {
             $user_data = $user;
         }
-        if ($username ==  null || $username == 'Guest') {
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if ($username ==  null || $username == 'Guest') {
+            Session::reflash();
             return redirect('/login');
         } else {
             Session::reflash();
-            // dd($auction);
             return view('users.item', [
                 'offer' => $offer,
                 'item' => $item,

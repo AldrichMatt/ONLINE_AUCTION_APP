@@ -39,10 +39,6 @@
             <a class="text-black" href="/admin/employee">Employee Menu</a>
           </div>
           <hr>
-          <div class="h1 fw-semibold">
-            <a class="text-black" href="/admin/auction">Auction Menu</a>
-          </div>
-          <hr>
           @endif
         </div>
       </div>

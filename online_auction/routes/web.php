@@ -36,6 +36,7 @@ Route::get('/admin/employee', [Admin::class, 'EmployeeShow']);
 
 Route::get('/admin/report', [Admin::class, 'GenerateReport']);
 
+Route::post('/admin/{subject_name}', [Admin::class, 'SubjectAdd']);
 Route::get('/admin/delete/{subject_name}/{subject_id}', [Admin::class, 'DeleteSubject']);
 Route::get('/admin/edit/{subject_name}/{subject_id}', [Admin::class, 'EditShow']);
 Route::get('/admin/update/{subject_name}/{subject_id}', [Admin::class, 'UpdateSubject']);

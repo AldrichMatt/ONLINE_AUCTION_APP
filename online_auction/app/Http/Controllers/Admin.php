@@ -130,12 +130,14 @@ class Admin extends Controller
         $username = Session::get('username');
         $level = Session::get('level');
         $items = Item::all();
+        $mydate = getdate(date("U"));
         Session::reflash();
         if (isset($username) == true && isset($level) == true) {
             return view('admin.items')->with([
                 'username' => $username,
                 'level' => $level,
-                'items' => $items
+                'items' => $items,
+                'mydate' => $mydate
             ]);
         } else {
             return redirect('/admin/d');
@@ -233,6 +235,44 @@ class Admin extends Controller
             ]);
         } else {
             return redirect('/admin/d');
+        }
+    }
+
+    public function SubjectAdd(Request $request, $subject_name, $subject_id)
+    {
+        Session::reflash();
+        switch ($subject_name) {
+            case 'item':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                $user_data = $request->validate([
+                    'item_name' => 'required',
+                    'input_date' => 'date',
+                    'company_name' => 'required',
+                    'location' => 'required',
+                    'initial_price' => 'required|numeric',
+                    'description' => 'required|max:300',
+                ]);
+                Item::create();
+                return redirect('/admin/item');
+                break;
+
+            case 'auction':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+
+                return redirect('/admin/auction');
+                break;
+
+            case 'user':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+
+                return redirect('/admin/user');
+                break;
+
+            case 'employee':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+
+                return redirect('/admin/employee');
+                break;
         }
     }
 

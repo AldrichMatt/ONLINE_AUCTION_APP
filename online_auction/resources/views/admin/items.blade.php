@@ -61,11 +61,26 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="ItemName" class="form-label">Item Name</label>
-                        <input type="text" name="item_name" class="form-control" id="ItemName">
-                
-                      </div>
+                        <input type="text" name="item_name" class="form-control" id="ItemName" required>
+                        <label for="CompanyName" class="form-label">Company Name</label>
+                        <input type="text" name="company_name" class="form-control" id="CompanyName" required>
+                        <label for="Location" class="form-label">Location</label>
+                        <input type="text" name="location" class="form-control" id="Location" required>
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="text" name="initial_price" class="form-control" id="Price" required>
+                        <input type="hidden" name="input_date" value="{{$mydate['year'] . "-" . $mydate ['mon'] . "-" . $mydate['mday']}}" id="InputDate">
+                        
+                    </div>
                 </div>
-                <div class="col">Lorem</div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="Description" required></textarea>
+                        <label for="ImageInput" class="form-label">Image</label>
+                        <input class="form-control" type="file" name="image" id="ImageInput" accept="image/*" required>
+                        <img id="ImagePreview" style="max-width:220px; min-width:200px" class="mt-3"/>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -76,4 +91,10 @@
     </div>
   </div>
 </div>
+<script>
+    document.getElementById('ImageInput').onchange = function () {
+  var src = URL.createObjectURL(this.files[0])
+  document.getElementById('ImagePreview').src = src
+}
+</script>
 </x-layout>

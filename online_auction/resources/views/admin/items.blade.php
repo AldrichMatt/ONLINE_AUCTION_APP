@@ -57,6 +57,7 @@
       </div>
       <div class="modal-body">
         <form action="" method="post">
+            @csrf
             <div class="row row-cols-2">
                 <div class="col">
                     <div class="mb-3">

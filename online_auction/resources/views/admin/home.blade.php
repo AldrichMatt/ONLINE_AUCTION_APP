@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row my-3">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
                     <a class="text-dark" href="/admin/item">
                     <div class="card-body">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             @if($level == 1)
-            <div class="col-2">
+            <div class="col-3">
                 <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
                     <a class="text-dark" href="/admin/auction">
                     <div class="card-body">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             @else
-            <div class="col-2">
+            <div class="col-3">
                 <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
                     <a class="text-dark" href="/admin/user">
                     <div class="card-body">
@@ -45,7 +45,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
                     <a class="text-dark" href="/admin/employee">
                     <div class="card-body">

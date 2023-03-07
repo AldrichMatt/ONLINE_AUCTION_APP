@@ -285,7 +285,6 @@ class Admin extends Controller
                 Item::where('item_id', '=', $subject_id)->delete();
                 return redirect('/admin/item');
                 break;
-
             case 'auction':
                 echo "<script>alert('Your action is irrevirsible')</script>";
                 Auction::where('auction_id', '=', $subject_id)->delete();

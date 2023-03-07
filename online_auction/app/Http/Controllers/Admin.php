@@ -238,24 +238,37 @@ class Admin extends Controller
         }
     }
 
-    public function SubjectAdd(Request $request, $subject_name, $subject_id)
+    public function SubjectAdd(Request $request, $subject_name)
     {
         Session::reflash();
         switch ($subject_name) {
             case 'item':
-                echo "<script>alert('Your action is irrevirsible')</script>";
-                $user_data = $request->validate([
-                    'item_name' => 'required',
+                Session::reflash();
+                Session::remove('errors');
+                if(isset($request->image)){
+                    $image = $request->image->getClientOriginalName();
+                } else {
+                    $image = 'logo-dark.png';
+                }
+                $item_data = [
+                    'item_name' => $request->item_name,
+                    'input_date' => $request->input_date,
+                    'image' => "/assets/".$image,
+                    'company_name' => $request->company_name,
+                    'location' => $request->location,
+                    'initial_price' => $request->initial_price,
+                    'description' => $request->description,
+                ];
+                $request->image->move(public_path('assets'), $image);
+                Item::create($item_data);
+                $item_validation = $request->validate([
                     'input_date' => 'date',
-                    'company_name' => 'required',
-                    'location' => 'required',
-                    'initial_price' => 'required|numeric',
-                    'description' => 'required|max:300',
+                    'image' => 'mimes:png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP',
+                    'initial_price' => 'numeric',
+                    'description' => 'max:300',
                 ]);
-                Item::create();
                 return redirect('/admin/item');
                 break;
-
             case 'auction':
                 echo "<script>alert('Your action is irrevirsible')</script>";
 
@@ -276,7 +289,7 @@ class Admin extends Controller
         }
     }
 
-    public function DeleteSubject(Request $request, $subject_name, $subject_id)
+    public function DeleteSubject($subject_name, $subject_id)
     {
         Session::reflash();
         switch ($subject_name) {

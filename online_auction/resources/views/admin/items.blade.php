@@ -23,14 +23,14 @@
                         
                             <tr>
                                 <td>{{$items->item_id}}</td>
-                                <td><img src="{{asset("$items->image")}}" style="max-width:250px" alt="" srcset=""></td>
+                                <td><img src="{{asset("$items->image")}}" class="rounded-3" style="max-width:250px" alt="" srcset=""></td>
                                 <td>{{$items->item_name}}</td>
                                 <td>{{$items->company_name}}<br/> <img src="{{asset('assets/map-pin.svg')}}" alt="location pin" height="15px" srcset=""> {{ $items->location}}</td>
                                 <td>{{$items->initial_price}}</td>
                                 <td>
                                     <a href="/admin/item/{{$items->item_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
                                     <a href="/admin/delete/item/{{$items->item_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/item/{{$items->item_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/edit/item/{{$items->item_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         
@@ -48,6 +48,7 @@
         +
     </button>
 </div>
+
 <div class="modal fade" id="newItemModal" tabindex="-1" aria-labelledby="newItemModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

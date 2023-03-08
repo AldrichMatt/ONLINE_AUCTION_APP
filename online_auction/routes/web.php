@@ -39,7 +39,7 @@ Route::get('/admin/report', [Admin::class, 'GenerateReport']);
 Route::post('/admin/add/{subject_name}', [Admin::class, 'SubjectAdd']);
 Route::get('/admin/delete/{subject_name}/{subject_id}', [Admin::class, 'DeleteSubject']);
 Route::get('/admin/edit/{subject_name}/{subject_id}', [Admin::class, 'EditShow']);
-Route::get('/admin/update/{subject_name}/{subject_id}', [Admin::class, 'UpdateSubject']);
+Route::post('/admin/update/{subject_name}/{subject_id}', [Admin::class, 'UpdateSubject']);
 
 Route::get('/admin/signup', [Admin::class, 'RegistrationShow']);
 Route::post('/admin_register', [Admin::class, 'Register']);

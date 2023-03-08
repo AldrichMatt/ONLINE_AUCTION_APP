@@ -198,25 +198,15 @@ class Admin extends Controller
         }
     }
 
+
+
     public function SingleItemShow($item_id)
     {
         Session::reflash();
         $username = Session::get('username');
         $level = Session::get('level');
-        $auction = Auction::all()->where('item_id', $item_id);
         $item = Item::all()->where('item_id', $item_id);
-        $auction_data = [];
         $user_data = [];
-        $offer = [];
-
-        foreach ($auction as $a) {
-            $auction_data = $a;
-        }
-        $auction_id = $auction_data->auction_id;
-        $running_offer = RunningOffer::all()->where('auction_id', $auction_id);
-        foreach ($running_offer as $r) {
-            $offer = $r;
-        }
         $user = User::all()->where('username', $username);
         foreach ($user as $user) {
             $user_data = $user;
@@ -225,9 +215,7 @@ class Admin extends Controller
             Session::reflash();
             // dd($auction);
             return view('admin.item', [
-                'offer' => $offer,
                 'item' => $item,
-                'auction' => $auction_data,
                 'username' => $username,
                 'level' => $level,
                 'user' => $user_data,
@@ -245,7 +233,7 @@ class Admin extends Controller
             case 'item':
                 Session::reflash();
                 Session::remove('errors');
-                if(isset($request->image)){
+                if (isset($request->image)) {
                     $image = $request->image->getClientOriginalName();
                 } else {
                     $image = 'logo-dark.png';
@@ -253,20 +241,20 @@ class Admin extends Controller
                 $item_data = [
                     'item_name' => $request->item_name,
                     'input_date' => $request->input_date,
-                    'image' => "/assets/".$image,
+                    'image' => "/assets/" . $image,
                     'company_name' => $request->company_name,
                     'location' => $request->location,
                     'initial_price' => $request->initial_price,
                     'description' => $request->description,
                 ];
-                $request->image->move(public_path('assets'), $image);
-                Item::create($item_data);
                 $item_validation = $request->validate([
                     'input_date' => 'date',
                     'image' => 'mimes:png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP',
                     'initial_price' => 'numeric',
                     'description' => 'max:300',
                 ]);
+                $request->image->move(public_path('assets'), $image);
+                Item::create($item_data);
                 return redirect('/admin/item');
                 break;
             case 'auction':
@@ -314,6 +302,91 @@ class Admin extends Controller
                 echo "<script>alert('Your action is irrevirsible')</script>";
                 Employee::where('employee_id', '=', $subject_id)->delete();
                 return redirect('/admin/employee');
+                break;
+        }
+    }
+
+    public function EditShow($subject_name, $subject_id)
+    {
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        switch ($subject_name) {
+            case 'item':
+                $mydate = getdate(date("U"));
+                $item = Item::all()->where('item_id', '=', $subject_id);
+                return view('admin.edit_item', [
+                    'item' => $item,
+                    'username' => $username,
+                    'level' => $level,
+                    'mydate' => $mydate
+                ]);
+                break;
+            case 'auction':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                break;
+
+            case 'user':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                break;
+
+            case 'employee':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                break;
+        }
+    }
+
+    public function UpdateSubject(Request $request, $subject_name, $subject_id)
+    {
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        switch ($subject_name) {
+            case 'item':
+                $item = Item::all()->where('item_id', '=', $subject_id);
+                $item_data = [];
+                foreach ($item as $item) {
+                    $item_data = $item;
+                };
+                if (isset($request->image)) {
+                    $image = "/assets/" . $request->image->getClientOriginalName();
+                } else {
+                    $image = $item_data->image;
+                }
+                $item_data = [
+                    'item_name' => $request->item_name,
+                    'input_date' => $request->input_date,
+                    'image' => $image,
+                    'company_name' => $request->company_name,
+                    'location' => $request->location,
+                    'initial_price' => $request->initial_price,
+                    'description' => $request->description,
+                ];
+                $item_validation = $request->validate([
+                    'input_date' => 'date',
+                    'image' => 'mimes:png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP',
+                    'initial_price' => 'numeric',
+                    'description' => 'max:300',
+                ]);
+                try {
+                    $request->image->move(public_path('assets'), $image);
+                    Item::where('item_id', '=', $subject_id)->update($item_data);
+                    return redirect('/admin/item');
+                } catch (\Throwable $th) {
+                    Item::where('item_id', '=', $subject_id)->update($item_data);
+                    return redirect('/admin/item');
+                }
+                break;
+            case 'auction':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                break;
+
+            case 'user':
+                echo "<script>alert('Your action is irrevirsible')</script>";
+                break;
+
+            case 'employee':
+                echo "<script>alert('Your action is irrevirsible')</script>";
                 break;
         }
     }

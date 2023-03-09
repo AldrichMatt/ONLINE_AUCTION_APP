@@ -15,6 +15,7 @@ class Auction extends Model
     protected $fillable = [
         'item_id',
         'auction_date',
+        'employee_id',
         'starting_price',
         'status'
     ];

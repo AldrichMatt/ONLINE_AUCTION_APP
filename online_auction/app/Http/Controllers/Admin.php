@@ -264,8 +264,14 @@ class Admin extends Controller
                 break;
 
             case 'user':
-                echo "<script>alert('Your action is irrevirsible')</script>";
-
+                // dd($request);
+                $user_validation = $request->validate([
+                    'full_name' => 'required',
+                    'username' => 'required|unique:users,username',
+                    'password' => 'required',
+                    'telephone' => 'required'
+                ]);
+                User::create($user_validation);
                 return redirect('/admin/user');
                 break;
 
@@ -327,7 +333,13 @@ class Admin extends Controller
                 break;
 
             case 'user':
-                echo "<script>alert('Your action is irrevirsible')</script>";
+                $mydate = getdate(date("U"));
+                $user = User::all()->where('user_id', '=', $subject_id);
+                return view('admin.edit_user', [
+                    'user' => $user,
+                    'username' => $username,
+                    'level' => $level
+                ]);
                 break;
 
             case 'employee':

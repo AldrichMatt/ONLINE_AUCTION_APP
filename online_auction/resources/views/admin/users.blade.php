@@ -43,32 +43,39 @@
     <div class="sticky-bottom float-end">
         <!-- Button trigger modal -->
     <button type="button" class="btn btn-dark m-5 rounded-5" data-bs-toggle="modal" data-bs-target="#newItemModal">
-        +
     </button>
 </div>
 <div class="modal fade" id="newItemModal" tabindex="-1" aria-labelledby="newItemModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="newItemModalLabel">Add new Item</h1>
+        <h1 class="modal-title fs-5" id="newItemModalLabel">Add new User</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="/admin/add/user" method="POST">
+            @csrf
             <div class="row row-cols-2">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="ItemName" class="form-label">Item Name</label>
-                        <input type="text" name="item_name" class="form-control" id="ItemName">
-                
-                      </div>
+                        <label for="fullName" class="form-label">Full name</label>
+                        <input type="text" name="full_name" class="form-control" id="fullName">
+                        <label for="userName" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" id="userName">
+                        
+                    </div>
                 </div>
-                <div class="col">Lorem</div>
+                <div class="col">
+                    <div class="mb-3">
+                         <label for="Password" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" id="Password">
+                        <label for="telePhoneNum" class="form-label">Telephone</label>
+                        <input type="text" name="telephone" class="form-control" id="telePhoneNum">
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
-            <button type="submit" class="btn btn-primary">Create Item</button>
+            <button type="submit" class="btn btn-primary">Create User</button>
         </form>
       </div>
     </div>

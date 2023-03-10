@@ -28,7 +28,7 @@
                                 <td>
                                     <a href="/admin/employee/{{$employees->employee_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
                                     <a href="/admin/delete/employee/{{$employees->employee_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/employee/{{$employees->employee_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/edit/employee/{{$employees->employee_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         

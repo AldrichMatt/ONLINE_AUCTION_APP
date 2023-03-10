@@ -4,7 +4,7 @@
     
     <div class="container my-5 modal-open">
         @foreach ($item as $item)
-        <strong><a href="/admin/item" class="text-dark text-decoration-underline"><- Back</a></strong>
+        <strong><a href="/admin/item" class="text-dark"><img src="{{asset('assets/chevron-left.svg')}}" alt="" srcset=""> Back</a></strong>
         <form action="/admin/update/item/{{$item->item_id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row row-cols-2">

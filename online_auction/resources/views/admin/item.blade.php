@@ -4,7 +4,7 @@
     
     <div class="container my-5 modal-open">
         @foreach ($item as $item)
-        <strong><a href="/admin/item" class="text-dark text-decoration-underline"><- Back</a></strong>
+        <strong><a href="/admin/item" class="text-dark"><img src="{{asset('assets/chevron-left.svg')}}" alt="" srcset=""> Back</a></strong>
         <div class="row">
             <div class="col-lg-5 col-sm-12 justify-content-center text-center align-items-center">
                 <img src="{{asset($item->image)}}" width="60%" alt="" srcset="">

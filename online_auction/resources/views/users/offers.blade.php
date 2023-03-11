@@ -11,12 +11,12 @@
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4">
-            @unless(count($items) == 0)
+            @unless(count($auctions) == 0)
             @foreach ($items as $items)
                 <x-item-card :items="$items"/>
             @endforeach
             @else
-            <p>No Items Found</p>
+            <p>No auctions Found</p>
             @endunless
         </div>
     </div>

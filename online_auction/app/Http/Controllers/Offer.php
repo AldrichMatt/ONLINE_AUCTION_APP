@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\RunningOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 use Validator;
@@ -17,8 +18,17 @@ class Offer extends Controller
     {
 
         Session::reflash();
-        $items = Item::all();
+        $items = DB::select(
+            "SELECT auctions.*, items.*
+            FROM auctions
+            INNER JOIN items
+            ON auctions.item_id = items.item_id
+            "
+        );
 
+        foreach($items as $items){
+            $items = $items;
+        }
         $username = Session::get('username');
         $level = Session::get('level');
 
@@ -31,7 +41,7 @@ class Offer extends Controller
         } else {
             return view('users.offers')->with([
                 'username' => $username,
-                'items' => $items
+                'items' => $items,
             ]);
         }
     }

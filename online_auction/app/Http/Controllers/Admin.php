@@ -256,10 +256,19 @@ class Admin extends Controller
         foreach($item_data as $item){
             $item_data = $item;
         }
-        
-        $startingprice = $item_data->initial_price;
         $item = Item::all()->where('item_id', $item_data->item_id);
-
+        if (isset($username) == true && isset($level) == true) {
+            Session::reflash();
+            // dd($auction);
+            return view('admin.item', [
+                'item' => $item,
+                'username' => $username,
+                'level' => $level,
+                'status' =>  ''
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
     }
 
 

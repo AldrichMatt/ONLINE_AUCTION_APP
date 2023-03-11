@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-6 float-end text-end">
                     <div class="fs-5">Initial Price</div>
-                    <div class="fs-5 fw-bold"> <span class="border-0 rounded-0 bg-white">$</span>{{$item->initial_price}}</div>
+                    <div class="fs-5 fw-bold"> <span class="border-0 rounded-0 bg-white">Rp</span>{{$item->initial_price}}</div>
                 </div>
                 </div>
                 <div class="fs-5 fw-bold -bottom-3">Description</div>

@@ -26,7 +26,7 @@
                                 <td>{{$auctions->item_name}}</td>   
                                 <td><img src="{{asset("$auctions->image")}}" width="300px" alt="Image" srcset=""></td>
                                 <td>{{$auctions->auction_date}}</td>
-                                <td>{{$auctions->starting_price}}</td>
+                                <td>Rp {{$auctions->starting_price}}</td>
                                 <td>
                                     <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
                                     <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>

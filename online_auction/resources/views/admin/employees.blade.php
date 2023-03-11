@@ -15,6 +15,7 @@
                         <th>Employee Name</th>
                         <th>Username</th>
                         <th>Level</th>
+                        <th>Password</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -24,7 +25,13 @@
                                 <td>{{$employees->employee_id}}</td>
                                 <td>{{$employees->employee_name}}</td>
                                 <td>{{$employees->username}}</td>
-                                <td>{{$employees->level}}</td>
+                                <td>
+                                    @if($employees->level == 1) Employee 
+                                    @elseif($employees->level == 2) Admin 
+                                    @else Unverified
+                                    @endif
+                                </td>
+                                <td>{{$employees->password}}</td>
                                 <td>
                                     {{-- <a href="/admin/employee/{{$employees->employee_id}}" class="btn btn-primary ms-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a> --}}
                                     <a href="/admin/delete/employee/{{$employees->employee_id}}" class="btn btn-danger ms-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
@@ -50,25 +57,35 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="newItemModalLabel">Add new Item</h1>
+        <h1 class="modal-title fs-5" id="newItemModalLabel">Add new Employee</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="/admin/add/employee" method="post">
+            @csrf
             <div class="row row-cols-2">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="ItemName" class="form-label">Item Name</label>
-                        <input type="text" name="item_name" class="form-control" id="ItemName">
-                
-                      </div>
+                        <label for="UserName" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control mb-2"  id="UserName">           
+                        <label for="FullName" class="form-label">Employee Name</label>
+                        <input type="text" name="employee_name" class="form-control mb-2"  id="FullName">  
+                    </div>
                 </div>
-                <div class="col">Lorem</div>
-            </div>
+                <div class="col">
+                    
+                    <label for="Password" class="form-label">Password</label>
+                    <input type="text" name="password" class="form-control mb-2"  id="Password">           
+                    <label class="form-label">Level</label>
+                    <select class="form-select mb-3" name="level" id="">
+                        <option value="1">Employee</option>
+                        <option value="2">Admin</option>
+                    </select>       
+                </div>         
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
-            <button type="submit" class="btn btn-primary">Create Item</button>
+            <button type="submit" class="btn btn-primary">Create Employee</button>
         </form>
       </div>
     </div>

@@ -26,6 +26,7 @@ Route::get('/admin/logout', [Admin::class, 'Logout']);
 
 Route::get('/admin/d', [Admin::class, 'DashboardShow']);
 Route::get('/admin/auction', [Admin::class, 'AuctionShow']);
+Route::get('/admin/auction/{auction_id}', [Admin::class, 'SingleAuctionShow']);
 
 Route::get('/admin/item', [Admin::class, 'ItemShow']);
 Route::get('/admin/item/{item_id}', [Admin::class, 'SingleItemShow']);

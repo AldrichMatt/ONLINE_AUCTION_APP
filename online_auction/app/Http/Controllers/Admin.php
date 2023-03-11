@@ -19,6 +19,14 @@ use function PHPUnit\Framework\isEmpty;
 class Admin extends Controller
 {
 
+    private function updateLevel($username){
+        $employee_data = Employee::all()->where('username', '=', $username);
+        foreach($employee_data as $e){
+            $employee_data = $e;
+        }
+        $level = $employee_data->level;
+        Session::flash('level', $level);
+    }
     public function LoginShow()
     {
         $username = Session::get('username');
@@ -33,7 +41,6 @@ class Admin extends Controller
     }
     public function RegistrationSHow()
     {
-        $username = Session::get('username');
         if (isset($username)) {
             Session::reflash();
             return redirect('/d');
@@ -116,18 +123,28 @@ class Admin extends Controller
     public function DashboardShow()
     {
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         Session::reflash();
-        if (isset($username) == true) {
-            return view('admin.home')->with(['username' => $username, 'level' => $level]);
+        if (!isset($level)) {
+            return redirect('/login');
         } else {
-            return redirect('/admin');
+            return view('admin.home')->with(['username' => $username, 'level' => $level]);
         }
     }
 
     public function ItemShow()
     {
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         $items = Item::all();
         $mydate = getdate(date("U"));
@@ -147,6 +164,11 @@ class Admin extends Controller
     public function UserShow()
     {
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         $users = User::all();
         Session::reflash();
@@ -164,6 +186,11 @@ class Admin extends Controller
     public function EmployeeShow()
     {
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         $employees = Employee::all();
         Session::reflash();
@@ -181,17 +208,28 @@ class Admin extends Controller
     public function AuctionShow()
     {
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
-        $auctions = DB::select("SELECT auctions.auction_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
+        $auctions = DB::select(
+        "SELECT auctions.auction_id, items.item_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
         FROM auctions
         INNER JOIN items
         ON auctions.item_id = items.item_id");
+        $items = DB::select(
+            "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM auctions)"
+        );
+
         Session::reflash();
         if (isset($username) == true && isset($level) == true) {
             return view('admin.auctions')->with([
                 'username' => $username,
                 'level' => $level,
-                'auctions' => $auctions
+                'auctions' => $auctions,
+                'items' => $items
             ]);
         } else {
             return redirect('/admin/d');
@@ -199,11 +237,41 @@ class Admin extends Controller
     }
 
 
+    public function SingleAuctionShow($auction_id){
+        Session::reflash();
+        $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
+        $level = Session::get('level');
+        $item_data = DB::select(
+            "SELECT items.item_id, items.initial_price 
+        FROM auctions
+        INNER JOIN items
+        ON auctions.item_id = items.item_id
+        "
+        );
+        foreach($item_data as $item){
+            $item_data = $item;
+        }
+        
+        $startingprice = $item_data->initial_price;
+        $item = Item::all()->where('item_id', $item_data->item_id);
+
+    }
+
 
     public function SingleItemShow($item_id)
     {
         Session::reflash();
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         $item = Item::all()->where('item_id', $item_id);
         $user_data = [];
@@ -257,14 +325,35 @@ class Admin extends Controller
                 Item::create($item_data);
                 return redirect('/admin/item');
                 break;
+                
             case 'auction':
-                echo "<script>alert('Your action is irrevirsible')</script>";
+                $employee_data = Employee::all()->where('employee_name', '=', $request->employee_name);
+                foreach($employee_data as $e){
+                    $employee_data = $e;
+                };
+
+                $item_data = Item::all()->where('item_id', '=', $request->item_id);
+                foreach($item_data as $i){
+                    $item_data = $i;
+                }
+                date_default_timezone_set($request->timezone);
+                $date = date('Y-m-d');
+
+                $auction_data = [
+                    'item_id' => $request->item_id,
+                    'employee_id' => $employee_data->employee_id,
+                    'auction_date' => $date,
+                    'starting_price' => $item_data->initial_price,
+                    'status' => $request->status,
+                ];
+
+                Auction::create($auction_data);
 
                 return redirect('/admin/auction');
                 break;
 
             case 'user':
-                // dd($request);
+                
                 $user_validation = $request->validate([
                     'full_name' => 'required',
                     'username' => 'required|unique:users,username',
@@ -276,8 +365,13 @@ class Admin extends Controller
                 break;
 
             case 'employee':
-                echo "<script>alert('Your action is irrevirsible')</script>";
-
+                $employee_validation = $request->validate([
+                    'employee_name' => 'required|unique:employees,employee_name',
+                    'username' => 'required|unique:employees,username',
+                    'password' => 'required',
+                    'level' => 'required',
+                ]);
+                Employee::create($employee_validation);
                 return redirect('/admin/employee');
                 break;
         }
@@ -286,6 +380,12 @@ class Admin extends Controller
     public function DeleteSubject($subject_name, $subject_id)
     {
         Session::reflash();
+        $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         switch ($subject_name) {
             case 'item':
                 echo "<script>alert('Your action is irrevirsible')</script>";
@@ -316,6 +416,11 @@ class Admin extends Controller
     {
         Session::reflash();
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         switch ($subject_name) {
             case 'item':
@@ -351,6 +456,11 @@ class Admin extends Controller
     {
         Session::reflash();
         $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
         $level = Session::get('level');
         switch ($subject_name) {
             case 'item':
@@ -391,13 +501,25 @@ class Admin extends Controller
             case 'auction':
                 echo "<script>alert('Your action is irrevirsible')</script>";
                 break;
-
-            case 'user':
-                echo "<script>alert('Your action is irrevirsible')</script>";
-                break;
-
             case 'employee':
-                echo "<script>alert('Your action is irrevirsible')</script>";
+                $employee_data = [
+                    "username"=>$request->username,
+                    "employee_name" => $request->employee_name,
+                    "password" =>$request->password,
+                    "level"=>$request->level
+                ];
+                Employee::where('employee_id','=', $subject_id)->update($employee_data);
+                $employee_data = Employee::all()->where('employee_id', '=', $subject_id);
+                foreach($employee_data as $e){
+                    $employee_data = $e;
+                };
+                if($employee_data->level == 1){
+                    Session::flash('level', 1);
+                    return redirect('/admin');
+                } else{
+                    return redirect('/admin/employee');
+
+                }
                 break;
         }
     }

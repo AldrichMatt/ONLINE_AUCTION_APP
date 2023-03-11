@@ -2,7 +2,7 @@
 <nav class="autohide navbar bg-dark sticky-top">
     <div class="container-fluid">
         
-            <div class="col-lg-4">
+            <div class="col-4">
                 <a data-bs-toggle="offcanvas" type="button" data-bs-target="#Sidebar" aria-controls="Sidebar">
                     <img src="{{asset('/assets/three_line.png')}}" alt="logo" width="30px" onclick="" srcset="">
                 </a>
@@ -26,12 +26,12 @@
                   </div>
                 </div>
               </div>
-            <div class="col-lg-4 d-flex flex-wrap justify-content-center">
+            <div class="col-4 d-flex flex-wrap justify-content-center">
               <a href="#top">
                 <img src="{{asset('/assets/logo.png')}}" width="45vw" alt="">
               </a>
             </div>
-            <div class="col-lg-4 d-flex flex-wrap justify-content-end align-items-center ">
+            <div class="col-4 d-flex flex-wrap justify-content-end align-items-center ">
               @if ($username == 'Guest')
                 <p class="text-white h6 px-2">{{$username}}</p>
                 <a href="/signup" class="text-decoration-none text-white h6 px-2">Sign Up </a>

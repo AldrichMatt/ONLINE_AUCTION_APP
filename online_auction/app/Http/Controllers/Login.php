@@ -17,7 +17,11 @@ class Login extends Controller
     public function LoginShow()
     {
         $username = Session::get('username');
-        if (isset($username)) {
+        $level = Session::get('level');
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if (isset($username)) {
             Session::reflash();
             return redirect('/d');
         } else {
@@ -29,7 +33,11 @@ class Login extends Controller
     public function RegistrationSHow()
     {
         $username = Session::get('username');
-        if (isset($username)) {
+        $level = Session::get('level');
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if (isset($username)) {
             Session::reflash();
             return redirect('/d');
         } else {

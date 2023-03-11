@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\RunningOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 use Validator;
@@ -17,16 +18,30 @@ class Offer extends Controller
     {
 
         Session::reflash();
-        $items = Item::all();
+        $items = DB::select(
+            "SELECT auctions.*, items.*
+            FROM auctions
+            INNER JOIN items
+            ON auctions.item_id = items.item_id
+            "
+        );
 
+        foreach($items as $items){
+            $items = $items;
+        }
         $username = Session::get('username');
-        if ($username ==  null || $username == 'Guest') {
+        $level = Session::get('level');
+
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if ($username ==  null || $username == 'Guest') {
+            Session::reflash();
             return redirect('/login');
         } else {
-            Session::reflash();
             return view('users.offers')->with([
                 'username' => $username,
-                'items' => $items
+                'items' => $items,
             ]);
         }
     }
@@ -35,6 +50,7 @@ class Offer extends Controller
     {
         Session::reflash();
         $username = Session::get('username');
+        $level = Session::get('level');
         $auction = Auction::all()->where('item_id', $item_id);
         $item = Item::all()->where('item_id', $item_id);
         $auction_data = [];
@@ -53,11 +69,14 @@ class Offer extends Controller
         foreach ($user as $user) {
             $user_data = $user;
         }
-        if ($username ==  null || $username == 'Guest') {
+        if (isset($level)) {
+            Session::reflash();
+            return redirect('/admin/d');
+        } else if ($username ==  null || $username == 'Guest') {
+            Session::reflash();
             return redirect('/login');
         } else {
             Session::reflash();
-            // dd($auction);
             return view('users.item', [
                 'offer' => $offer,
                 'item' => $item,
@@ -79,9 +98,9 @@ class Offer extends Controller
             $auction_data = $a;
         }
         $item_id = $auction_data->item_id;
-        $item = Item::all()->where('item_id', $item_id);
-        foreach ($item as $item) {
-            $item = $item;
+        $item_data = Item::all()->where('item_id', $item_id);
+        foreach ($item_data as $item) {
+            $item = $item_data;
         };
         $offer_request = $request->all();
         $offer_price = (int)$offer_request['offer_price'];

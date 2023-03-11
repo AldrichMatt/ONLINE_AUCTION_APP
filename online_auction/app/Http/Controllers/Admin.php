@@ -333,17 +333,16 @@ class Admin extends Controller
                 break;
 
             case 'user':
-                $mydate = getdate(date("U"));
-                $user = User::all()->where('user_id', '=', $subject_id);
-                return view('admin.edit_user', [
-                    'user' => $user,
-                    'username' => $username,
-                    'level' => $level
-                ]);
+                return redirect('admin');
                 break;
 
             case 'employee':
-                echo "<script>alert('Your action is irrevirsible')</script>";
+                $employee = Employee::all()->where('employee_id', '=', $subject_id);
+                return view('admin.edit_employee', [
+                    'employee' => $employee,
+                    'username' => $username,
+                    'level' => $level,
+                ]);
                 break;
         }
     }

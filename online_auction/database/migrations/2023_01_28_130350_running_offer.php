@@ -15,8 +15,8 @@ return new class extends Migration
     {
         schema::create('running_offers', function (Blueprint $table) {
             $table->integer('offer_id', true);
-            $table->integer('auction_id')->index('auction_id');
-            $table->integer('user_id')->index('user_id');
+            $table->integer('auction_id')->index('auction_id')->references('auction_id')->on('auctions');
+            $table->integer('user_id')->index('user_id')->references('user_id')->on('users');
             $table->dateTime('offer_datetime');
             $table->bigInteger('offer_price');
         });

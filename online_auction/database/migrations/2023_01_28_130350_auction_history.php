@@ -15,9 +15,9 @@ return new class extends Migration
     {
         schema::create('auction_histories', function (Blueprint $table) {
             $table->integer('history_id', true);
-            $table->integer('auction_id')->index('auction_id');
-            $table->integer('item_id')->index('item_id');
-            $table->integer('user_id')->index('user_id');
+            $table->integer('auction_id')->index('auction_id')->references('auction_id')->on('auctions');
+            $table->integer('item_id')->index('item_id')->references('item_id')->on('items');
+            $table->integer('user_id')->index('user_id')->references('user_id')->on('users');
             $table->dateTime('report_date');
             $table->integer('sold_price');
         });

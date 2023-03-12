@@ -1,7 +1,7 @@
 <x-layout>
     {{-- content strart --}}
     <x-navbar-admin :username="$username" :level="$level"/>
-    <div class="container px-3 py-1">
+    <div class="container px-3 py-1 justify-content-around">
         <div class="row my-3">
             <div class="row-lg-3 mb-4">
                 <div class="h1 fw-semibold">Dashboard</div>
@@ -56,6 +56,16 @@
                 </div>
             </div>
             @endif
+            <div class="col-3">
+                <div class="card shadow-lg rounded border border-0 text-center justify-content-center">
+                    <a class="text-dark" href="/admin/report">
+                    <div class="card-body">
+                        <img src="{{asset('assets/logo-dark.png')}}" class="card-img p-4" alt="" srcset="">
+                       <p>Reports</p>
+                    </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </x-layout>

@@ -11,8 +11,8 @@
                         Current Price
                     </div>
                     <div class="text-lg mt-2">
-                        <i class="fa-solid fa-location-dot"></i> {{$items->initial_price}}
-                    </div>
+                        <i class="fa-solid fa-location-dot"></i>Rp {{$items->initial_price}}
+                        </div>
                 </div>
                 <div class="col-lg-6">
                     <h3>

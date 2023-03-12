@@ -40,6 +40,10 @@
           </div>
           <hr>
           @endif
+          <div class="h1 fw-semibold">
+            <a class="text-black" href="/admin/report">Reports</a>
+          </div>
+          <hr>
         </div>
       </div>
     </div>

@@ -24,9 +24,9 @@
                 </div>
                 <div class="col-6 float-end text-end">
                     <div class="fs-5">Initial Price</div>
-                    <div class="fs-5 fw-bold"> <span class="border-0 rounded-0 bg-white">$</span>{{$item->initial_price}}</div>
+                    <div class="fs-5 fw-bold"> <span class="border-0 rounded-0 bg-white">Rp</span> {{$item->initial_price}}</div>
                     <div class="fs-5">Running Bid</div>
-                    <div class="fs-5 fw-bold"><span class="border-0 rounded-0 bg-white">$</span>@if(isset($offer->offer_price)){{$offer->offer_price}}
+                    <div class="fs-5 fw-bold"><span class="border-0 rounded-0 bg-white">Rp</span>@if(isset($offer->offer_price)){{$offer->offer_price}}
                         @else{{$auction->starting_price}}
                     @endif
                 </div>
@@ -41,8 +41,9 @@
                 <form action="/offer/bid/{{$auction->auction_id}}/{{$user->user_id}}" method="POST" id="bid_form">
                     @csrf
                     <div class="input-group w-100">
-                        <span class="input-group-text border-0 rounded-0 bg-white fw-bold">$</span>
-                        <input type="number" value="{{old('offer_price')}}" name="offer_price" class="form-control border-light border-0 rounded-0 border-bottom border-dark" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                        <span class="input-group-text border-0 rounded-0 bg-white fw-bold">Rp</span>
+                        <input type="text" value="{{old('offer_price')}}" id="price" 
+                        name="offer_price" class="form-control border-light border-0 rounded-0 border-bottom border-dark">
                         @if (Session::has('message'))
                             <div class="small text-dark">
                                 {{ Session::get('message')}}
@@ -78,4 +79,31 @@
 </div>
     
 @endforeach 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(function(){
+      $("#price").keyup(function(e){
+        $("#price").val(format($(this).val().toString()));
+      });
+    });
+    var format = function(num){
+      var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+      if(str.indexOf(".") > 0) {
+        parts = str.split(".");
+        str = parts[0];
+      }
+      str = str.split("").reverse();
+      for(var j = 0, len = str.length; j < len; j++) {
+        if(str[j] != ",") {
+          output.push(str[j]);
+          if(i%3 == 0 && j < (len - 1)) {
+            output.push(",");
+          }
+          i++;
+        }
+      }
+      formatted = output.reverse().join("");
+      return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+    };
+    </script>
 </x-layout>

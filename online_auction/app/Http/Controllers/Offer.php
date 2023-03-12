@@ -26,9 +26,9 @@ class Offer extends Controller
             "
         );
 
-        foreach($items as $items){
-            $items = $items;
-        }
+        // foreach($items as $items){
+        //     $items = $items;
+        // }
         $username = Session::get('username');
         $level = Session::get('level');
 
@@ -100,14 +100,16 @@ class Offer extends Controller
         $item_id = $auction_data->item_id;
         $item_data = Item::all()->where('item_id', $item_id);
         foreach ($item_data as $item) {
-            $item = $item_data;
+            $item_data = $item;
         };
         $offer_request = $request->all();
         $offer_price = (int)$offer_request['offer_price'];
+
+        
         if (empty($offer_request['offer_price'])) {
             $message =  'Please fill the price';
         } else {
-            if ($offer_price > $auction_data->starting_price && $offer_price > $item->initial_price) {
+            if ($offer_price > $auction_data->starting_price && $offer_price > $item_data->initial_price) {
                 $offer_data = [
                     'auction_id' => $auction_id,
                     'user_id' => $user_id,

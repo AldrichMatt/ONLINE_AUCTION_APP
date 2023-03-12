@@ -532,4 +532,22 @@ class Admin extends Controller
                 break;
         }
     }
+
+    public function ReportsShow(){
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
+
+        $reports = Auction::all()->where('status', '=', 3); 
+        return view('admin.reports')->with([
+            'username' => $username,
+            'level' => $level,
+            'reports' => $reports
+        ]);
+    }
 }

@@ -215,7 +215,7 @@ class Admin extends Controller
         }
         $level = Session::get('level');
         $auctions = DB::select(
-        "SELECT auctions.auction_id, items.item_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
+        "SELECT auctions.auction_id, auctions.status, items.item_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
         FROM auctions
         INNER JOIN items
         ON auctions.item_id = items.item_id");

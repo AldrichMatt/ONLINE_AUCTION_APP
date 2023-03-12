@@ -16,6 +16,7 @@
                         <th>Item Image</th>
                         <th>Starting date</th>
                         <th>Starting Price</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -27,10 +28,11 @@
                                 <td><img src="{{asset("$auctions->image")}}" width="300px" alt="Image" srcset=""></td>
                                 <td>{{$auctions->auction_date}}</td>
                                 <td>Rp {{$auctions->starting_price}}</td>
+                                <td>@if($auctions->status == 0)Sedang Berjalan @elseif($auctions->status == 1) Selesai @else Suspended @endif</td>
                                 <td>
                                     <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
                                     <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/update/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    <a href="/admin/edit/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
                             </tr>
                         

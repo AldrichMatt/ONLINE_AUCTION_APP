@@ -26,11 +26,20 @@ class Offer extends Controller
             "
         );
 
-        // foreach($items as $items){
-        //     $items = $items;
-        // }
         $username = Session::get('username');
         $level = Session::get('level');
+
+
+        foreach($items as $item)
+        {
+        $fields[] = array(
+                          'item_name' => $item->item_name,
+                          'image' => $item->image,
+                          'offer_price',
+                          'company_name',
+                          'location',
+                      );
+        }
 
         if (isset($level)) {
             Session::reflash();
@@ -41,7 +50,7 @@ class Offer extends Controller
         } else {
             return view('users.offers')->with([
                 'username' => $username,
-                'items' => $items,
+                'items' => $items
             ]);
         }
     }
@@ -103,9 +112,10 @@ class Offer extends Controller
             $item_data = $item;
         };
         $offer_request = $request->all();
-        $offer_price = (int)$offer_request['offer_price'];
+        $offer_price = (string) $offer_request['offer_price'];
 
-        
+        $price_fix = str_replace( ',', '', $offer_price );
+
         if (empty($offer_request['offer_price'])) {
             $message =  'Please fill the price';
         } else {
@@ -114,12 +124,16 @@ class Offer extends Controller
                     'auction_id' => $auction_id,
                     'user_id' => $user_id,
                     'offer_datetime' => now(),
-                    'offer_price' => $request->offer_price
+                    'offer_price' => $price_fix
                 ];
+                try {
+                    RunningOffer::where('auction_id', '=', $auction_id)->delete();
+                } catch (\Throwable $th) {
+                }
                 RunningOffer::create($offer_data);
-                $message =  'Successfulyy placed bid';
+                $message =  'Successfully placed bid';
             } else {
-                $message =  'Failed to place bid';
+                $message =  'Bid price is lower than current price';
             }
         }
         return redirect()->back()->with('message', $message);

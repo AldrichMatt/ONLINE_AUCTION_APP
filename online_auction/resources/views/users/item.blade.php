@@ -4,7 +4,7 @@
     
     <div class="container my-5 modal-open">
         @foreach ($item as $item)
-        <strong><a href="/offers" class="text-dark text-decoration-underline"><- Offers</a></strong>
+        <strong><a href="/offers" class="text-dark "><img src="{{asset('assets/chevron-left.svg')}}" alt="" srcset=""> Offers</a></strong>
         <div class="row">
             <div class="col-lg-5 col-sm-12 justify-content-center text-center align-items-center">
                 <img src="{{asset($item->image)}}" width="60%" alt="" srcset="">
@@ -24,10 +24,10 @@
                 </div>
                 <div class="col-6 float-end text-end">
                     <div class="fs-5">Initial Price</div>
-                    <div class="fs-5 fw-bold"> <span class="border-0 rounded-0 bg-white">Rp</span> {{$item->initial_price}}</div>
+                    <div class="fs-5 fw-bold" id="initial_price"><span class="border-0 rounded-0 bg-white">Rp </span>{{number_format($item->initial_price)}}</div>
                     <div class="fs-5">Running Bid</div>
-                    <div class="fs-5 fw-bold"><span class="border-0 rounded-0 bg-white">Rp</span>@if(isset($offer->offer_price)){{$offer->offer_price}}
-                        @else{{$auction->starting_price}}
+                    <div class="fs-5 fw-bold"><span class="border-0 rounded-0 bg-white">Rp </span>@if(isset($offer->offer_price)){{number_format($offer->offer_price)}}
+                        @else{{number_format($auction->starting_price)}}
                     @endif
                 </div>
                 </div>
@@ -81,6 +81,7 @@
 @endforeach 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+
     $(function(){
       $("#price").keyup(function(e){
         $("#price").val(format($(this).val().toString()));

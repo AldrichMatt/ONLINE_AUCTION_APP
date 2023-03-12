@@ -12,8 +12,35 @@
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4 mb-5">
             @unless(count($items) == 0)
-            @foreach ($items as $items)
-                <x-item-card :items="$items"/>
+            @foreach($items as $item)
+            <div class="row row-cols-md-1">
+                <div class="card mb-2 p-3">
+                    <div class="row">
+                        <div class="col-3 text-end">
+                            <img src="{{asset($item->image)}}" width="100%"  alt="" srcset="">
+                        </div>
+                        <div class="col-6">
+                            <div class="position-absolute top-0 end-0 px-3">
+                                <div class="text-lg mt-4">
+                                    Starting Price
+                                </div>
+                                <div class="text-lg mt-2">
+                                    <i class="fa-solid fa-location-dot"></i>Rp {{number_format($item->initial_price)}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <h3>
+                                    <a href="/item/{{$item->item_id}}" class="text-dark text-decoration-underline">{{$item->item_name}}</a>
+                                </h3>
+                                <div class="text-xl font-bold">{{$item->company_name}}</div>
+                                <div class="text-lg">
+                                    <img src="{{asset('assets/map-pin.svg')}}" width="5%" class="me-2"/>{{$item->location}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endforeach
             @else
             <p>No auctions Found</p>

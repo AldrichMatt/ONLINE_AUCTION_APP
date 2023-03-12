@@ -26,9 +26,9 @@
                                 <td><img src="{{asset("$items->image")}}" class="rounded-3" style="max-width:250px" alt="" srcset=""></td>
                                 <td>{{$items->item_name}}</td>
                                 <td>{{$items->company_name}}<br/> <img src="{{asset('assets/map-pin.svg')}}" alt="location pin" height="15px" srcset=""> {{ $items->location}}</td>
-                                <td>Rp {{$items->initial_price}}</td>
+                                <td>Rp {{number_format($items->initial_price)}}</td>
                                 <td>
-                                    <a href="/admin/item/{{$items->item_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
+                                    {{-- <a href="/admin/item/{{$items->item_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a> --}}
                                     <a href="/admin/delete/item/{{$items->item_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
                                     <a href="/admin/edit/item/{{$items->item_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
                                 </td>
@@ -77,8 +77,8 @@
                         @error('location')
                         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                         @enderror
-                        <label for="Price" class="form-label">Price</label>
-                        <input type="text" name="initial_price" class="form-control" id="Price" required>
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" name="initial_price" class="form-control" id="price" required>
                         @error('initial_price')
                         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                         @enderror
@@ -117,4 +117,32 @@
   document.getElementById('ImagePreview').src = src
 }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+    $(function(){
+      $("#price").keyup(function(e){
+        $("#price").val(format($(this).val().toString()));
+      });
+    });
+    var format = function(num){
+      var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+      if(str.indexOf(".") > 0) {
+        parts = str.split(".");
+        str = parts[0];
+      }
+      str = str.split("").reverse();
+      for(var j = 0, len = str.length; j < len; j++) {
+        if(str[j] != ",") {
+          output.push(str[j]);
+          if(i%3 == 0 && j < (len - 1)) {
+            output.push(",");
+          }
+          i++;
+        }
+      }
+      formatted = output.reverse().join("");
+      return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+    };
+    </script>
 </x-layout>

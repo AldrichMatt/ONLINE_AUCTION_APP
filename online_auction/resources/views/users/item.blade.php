@@ -4,10 +4,12 @@
     
     <div class="container my-5 modal-open">
         @foreach ($item as $item)
+        <div class="row mb-3">
         <strong><a href="/offers" class="text-dark "><img src="{{asset('assets/chevron-left.svg')}}" alt="" srcset=""> Offers</a></strong>
+        </div>
         <div class="row">
             <div class="col-lg-5 col-sm-12 justify-content-center text-center align-items-center">
-                <img src="{{asset($item->image)}}" width="60%" alt="" srcset="">
+                <img class="border border-dark" src="{{asset($item->image)}}" style="max-width: 450px" alt="" srcset="">
             </div>
             <div class="col-7">
                 <div class="row">

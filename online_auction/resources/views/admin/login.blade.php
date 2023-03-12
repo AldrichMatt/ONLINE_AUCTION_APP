@@ -41,6 +41,7 @@
                         @enderror
                     </div>
                     <div class="mb-4 mx-auto">
+                        <input type="hidden" name="timezone" value="" id="timezone">
                         <button type="submit" class="btn btn-dark px-5 py-2">Log In</button>
                     </div>
                     <p class="small">Didn't have an account? <a href="/signup" class="text-white">Sign Up</a></p>
@@ -60,6 +61,7 @@
                         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                         @enderror
                     </div>
+                    <input type="hidden" name="timezone" value="" id="timezone">
                     <div class="mb-4 mx-auto">
                         <button type="submit" class="btn btn-dark px-5 py-2">Log In</button>
                     </div>
@@ -70,3 +72,10 @@
         </div>
     </div>
 </x-loginlayout>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#timezone').val(moment.tz.guess());
+    });
+</script>

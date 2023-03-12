@@ -23,6 +23,7 @@ class Offer extends Controller
             FROM auctions
             INNER JOIN items
             ON auctions.item_id = items.item_id
+            WHERE auctions.status = 0
             "
         );
 

@@ -6,6 +6,27 @@
             <div class="h1 fw-semibold">
                 Auctions
             </div>
+            @if($message !== null)
+            @switch($code)
+            @case(100)
+                 <div class="mb-4 px-3">
+                    <p class="alert alert-success rounded-4">{{ $message }}</p>
+                </div>
+                @break
+            @case(101)
+                <div class="mb-4 px-3">
+                    <p class="alert alert-danger rounded-4">{{ $message }}</p>
+                </div>
+                @break
+            @case(102)
+                <div class="mb-4 px-3">
+                    <p class="alert alert-warning rounded-4">{{ $message }}</p>
+                </div>
+                @break
+            @default
+            @endswitch
+            @else
+            @endif
         </div>
         <div class="grid grid-cols-2 gap-4 space-y-4">
             @unless(count($auctions) == 0)
@@ -27,12 +48,23 @@
                                 <td>{{$auctions->item_name}}</td>   
                                 <td><img src="{{asset("$auctions->image")}}" width="300px" alt="Image" srcset=""></td>
                                 <td>{{$auctions->auction_date}}</td>
-                                <td>Rp {{$auctions->starting_price}}</td>
-                                <td>@if($auctions->status == 0)Sedang Berjalan @elseif($auctions->status == 1) Selesai @else Suspended @endif</td>
+                                <td>Rp {{number_format($auctions->starting_price)}}</td>
+                                <td>@if($auctions->status == 0)Sedang Berjalan 
+                                    @elseif($auctions->status == 1) Selesai 
+                                    @elseif($auctions->status == 2) Suspended 
+                                    @else Terminated 
+                                    @endif
+                                </td>
                                 <td>
-                                    <a href="/admin/auction/{{$auctions->auction_id}}" class="btn btn-primary me-1"><img src="{{asset('assets/eye-dark.svg')}}" alt="Details" srcset=""></a>
-                                    <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                    <a href="/admin/edit/auction/{{$auctions->auction_id}}" class="btn btn-warning me-1"><img src="{{asset('assets/edit-dark.svg')}}" alt="Edit" srcset=""></a>
+                                    @if($auctions->status == 0)
+                                    <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/1" class="btn btn-warning me-1"><img src="{{asset('/assets/check.svg')}}" alt="" srcset=""></a>
+                                    <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/2" class="btn btn-danger me-1"><img src="{{asset('/assets/pause.svg')}}" alt="" srcset=""></a>
+                                    @elseif($auctions->status == 1)
+                                    <a href="/admin/auction/invoice/{{$auctions->auction_id}}" class="btn btn-secondary me-1"><img src="{{asset('/assets/printer.svg')}}" alt="" srcset=""></a>
+                                    @elseif($auctions->status = 2)
+                                    <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/0" class="btn btn-success me-1"><img src="{{asset('/assets/play.svg')}}" alt="" srcset=""></a>
+                                    <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('/assets/trash-dark.svg')}}" alt="" srcset=""></a>
+                                    @endif
                                 </td>
                             </tr>
                         
@@ -76,8 +108,6 @@
                         </div>
                 </div>
                 <div class="col"></div>
-            </div>
-        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
             <button type="submit" class="btn btn-primary">Create Item</button>

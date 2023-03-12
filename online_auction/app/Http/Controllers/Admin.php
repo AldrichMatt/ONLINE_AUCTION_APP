@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auction;
+use App\Models\AuctionHistory;
 use App\Models\Employee;
 use App\Models\Item;
 use App\Models\RunningOffer;
@@ -73,6 +74,10 @@ class Admin extends Controller
             'username' => 'required',
             'password' => 'required'
         ]);
+
+        date_default_timezone_set($request->timezone);
+
+                Session::flash('tz', $request->timezone);
 
         $employee_data = Employee::all()->where('username', $login_data['username']);
 
@@ -208,6 +213,8 @@ class Admin extends Controller
     public function AuctionShow()
     {
         $username = Session::get('username');
+        $code = Session::get('code');
+        $message = Session::get('message');
         try {
             Admin::updateLevel($username);
         } catch (\Throwable $th) {
@@ -229,6 +236,40 @@ class Admin extends Controller
                 'username' => $username,
                 'level' => $level,
                 'auctions' => $auctions,
+                'items' => $items,
+                'code' => $code,
+                'message' => $message
+            ]);
+        } else {
+            return redirect('/admin/d');
+        }
+    }
+    public function ReportsShow()
+    {
+        $username = Session::get('username');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
+        $level = Session::get('level');
+        $auctions = DB::select(
+        "SELECT auctions.auction_id, auctions.status, items.item_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
+        FROM auctions
+        INNER JOIN items
+        ON auctions.item_id = items.item_id
+        WHERE auctions.status = 1
+        ");
+        $items = DB::select(
+            "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM auctions)"
+        );
+
+        Session::reflash();
+        if (isset($username) == true && isset($level) == true) {
+            return view('admin.reports')->with([
+                'username' => $username,
+                'level' => $level,
+                'auctions' => $auctions,
                 'items' => $items
             ]);
         } else {
@@ -236,9 +277,7 @@ class Admin extends Controller
         }
     }
 
-
-    public function SingleAuctionShow($auction_id){
-        Session::reflash();
+    public function ReportPrint($auction_id){
         $username = Session::get('username');
         try {
             Admin::updateLevel($username);
@@ -246,61 +285,8 @@ class Admin extends Controller
             return redirect('/admin');
         }
         $level = Session::get('level');
-        $item_data = DB::select(
-            "SELECT items.item_id, items.initial_price 
-        FROM auctions
-        INNER JOIN items
-        ON auctions.item_id = items.item_id
-        "
-        );
-        foreach($item_data as $item){
-            $item_data = $item;
-        }
-        $item = Item::all()->where('item_id', $item_data->item_id);
-        if (isset($username) == true && isset($level) == true) {
-            Session::reflash();
-            // dd($auction);
-            return view('admin.item', [
-                'item' => $item,
-                'username' => $username,
-                'level' => $level,
-                'status' =>  ''
-            ]);
-        } else {
-            return redirect('/admin/d');
-        }
-    }
+        $auction_raw = Auction::all()->where('auctionid', '=', $auction_id);
 
-
-    public function SingleItemShow($item_id)
-    {
-        Session::reflash();
-        $username = Session::get('username');
-        try {
-            Admin::updateLevel($username);
-        } catch (\Throwable $th) {
-            return redirect('/admin');
-        }
-        $level = Session::get('level');
-        $item = Item::all()->where('item_id', $item_id);
-        $user_data = [];
-        $user = User::all()->where('username', $username);
-        foreach ($user as $user) {
-            $user_data = $user;
-        }
-        if (isset($username) == true && isset($level) == true) {
-            Session::reflash();
-            // dd($auction);
-            return view('admin.item', [
-                'item' => $item,
-                'username' => $username,
-                'level' => $level,
-                'user' => $user_data,
-                'status' =>  ''
-            ]);
-        } else {
-            return redirect('/admin/d');
-        }
     }
 
     public function SubjectAdd(Request $request, $subject_name)
@@ -315,19 +301,19 @@ class Admin extends Controller
                 } else {
                     $image = 'logo-dark.png';
                 }
+                $price_fix = str_replace( ',', '', $request->initial_price );
                 $item_data = [
                     'item_name' => $request->item_name,
                     'input_date' => $request->input_date,
                     'image' => "/assets/" . $image,
                     'company_name' => $request->company_name,
                     'location' => $request->location,
-                    'initial_price' => $request->initial_price,
+                    'initial_price' => $price_fix,
                     'description' => $request->description,
                 ];
                 $item_validation = $request->validate([
                     'input_date' => 'date',
                     'image' => 'mimes:png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP',
-                    'initial_price' => 'numeric',
                     'description' => 'max:300',
                 ]);
                 $request->image->move(public_path('assets'), $image);
@@ -346,6 +332,8 @@ class Admin extends Controller
                     $item_data = $i;
                 }
                 date_default_timezone_set($request->timezone);
+
+                Session::flash('tz', $request->timezone);
                 $date = date('Y-m-d');
 
                 $auction_data = [
@@ -533,7 +521,7 @@ class Admin extends Controller
         }
     }
 
-    public function ReportsShow(){
+    public function SetStatusAs($auction_id, $status){
         Session::reflash();
         $username = Session::get('username');
         $level = Session::get('level');
@@ -543,11 +531,70 @@ class Admin extends Controller
             return redirect('/admin');
         }
 
-        $reports = Auction::all()->where('status', '=', 3); 
-        return view('admin.reports')->with([
-            'username' => $username,
-            'level' => $level,
-            'reports' => $reports
-        ]);
+        $auction = [];
+        $offer = [];
+
+        $auction_raw = Auction::all()->where('auction_id', '=', $auction_id);
+        $offer_raw = RunningOffer::all()->where('auction_id', '=', $auction_id);
+        foreach($auction_raw as $i){
+            $auction = $i;
+        }
+
+        foreach($offer_raw as $i){
+            $offer = $i;
+        }
+
+        try {
+            $user_id = $offer->user_id;
+        } catch (\Throwable $th) {
+            Session::flash('code', '101');
+            Session::flash('message', 'Lelang ini belum diisi oleh penawar, tidak dapat diselesaikan');
+            return redirect('/admin/auction');
+        }
+
+        date_default_timezone_set(Session::get('tz'));
+        $date = date('Y-m-d');
+
+        if(isEmpty($offer_raw)){
+            $offer = $auction->starting_price;
+        } else {
+            $offer = [
+                'user_id' => $offer->user_id,
+                'offer_price' => $offer->offer_price];
+        }
+
+        if($status = 1){
+            $status_data = [
+                "status" => $status
+            ];
+
+            $history_data = [
+                'auction_id' => $auction_id,
+                'item_id' => $auction->item_id,
+                'user_id' => $offer->user_id,
+                'report_date' => $date,
+                'sold_price' => $offer->offer_price
+            ];
+            Auction::where('auction_id', '=', $auction_id)->update($status_data);
+            AuctionHistory::create($history_data);
+        } else{   
+            $status_data =  [
+                "status" => $status
+            ];
+            Auction::where('auction_id', '=', $auction_id)->update($status_data);
+        }
+            return redirect('/admin/auction');
+
+    }
+
+    public function SaveAsHistory($auction_id){
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
     }
 }

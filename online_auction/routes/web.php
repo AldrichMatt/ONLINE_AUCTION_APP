@@ -36,6 +36,9 @@ Route::get('/admin/user', [Admin::class, 'UserShow']);
 Route::get('/admin/employee', [Admin::class, 'EmployeeShow']);
 
 Route::get('/admin/report', [Admin::class, 'ReportsShow']);
+Route::get('/admin/report/invoice/{auction_id}', [Admin::class, 'ReportPrint']);
+
+Route::get('/admin/auction/{auction_id}/setstatus/{status}', [Admin::class, 'SetStatusAs']);
 
 Route::post('/admin/add/{subject_name}', [Admin::class, 'SubjectAdd']);
 Route::get('/admin/delete/{subject_name}/{subject_id}', [Admin::class, 'DeleteSubject']);

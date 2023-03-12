@@ -16,8 +16,8 @@
                         <input type="text" name="company_name" class="form-control border-0" value="{{$item->company_name}}" readonly id="CompanyName">                        
                         <label for="Location" class="form-label">Location</label>
                         <input type="text" name="location" class="form-control border-0" value="{{$item->location}}" readonly id="Location">                        
-                        <label for="Price" class="form-label">Price</label>
-                        <input type="text" name="initial_price" class="form-control" value="{{$item->initial_price}}" id="Price">                        
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" name="initial_price" class="form-control" value="{{$item->initial_price}}" onload="(format($(this).val().toString())" id="price">                        
                         <input type="hidden" name="input_date" value="{{$mydate['year'] . "-" . $mydate ['mon'] . "-" . $mydate['mday']}}" id="InputDate">
                     </div>
                 </div>
@@ -46,3 +46,31 @@
 }</script>
 @endforeach 
 </x-layout>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+    $(function(){
+      $("#price").focus(function(e){
+        $("#price").val(format($(this).val().toString()));
+      });
+    });
+    var format = function(num){
+      var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+      if(str.indexOf(".") > 0) {
+        parts = str.split(".");
+        str = parts[0];
+      }
+      str = str.split("").reverse();
+      for(var j = 0, len = str.length; j < len; j++) {
+        if(str[j] != ",") {
+          output.push(str[j]);
+          if(i%3 == 0 && j < (len - 1)) {
+            output.push(",");
+          }
+          i++;
+        }
+      }
+      formatted = output.reverse().join("");
+      return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+    };
+    </script>

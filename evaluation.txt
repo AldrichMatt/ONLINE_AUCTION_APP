@@ -1,0 +1,7 @@
+update gambar butuh message validasi done
+
+item name harus unik done
+
+menu laporan, status auction == 3 onwork
+
+status di tabel auction pending

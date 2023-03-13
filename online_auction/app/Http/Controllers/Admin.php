@@ -68,16 +68,15 @@ class Admin extends Controller
 
     public function Login(Request $request)
     {
-
-
         $login_data = $request->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
 
-        date_default_timezone_set($request->timezone);
+        
+            date_default_timezone_set('Asia/Makassar');
 
-                Session::flash('tz', $request->timezone);
+        Session::flash('tz', 'Asia/Makassar');
 
         $employee_data = Employee::all()->where('username', $login_data['username']);
 
@@ -225,7 +224,9 @@ class Admin extends Controller
         "SELECT auctions.auction_id, auctions.status, items.item_id, items.item_name, items.image,auctions.auction_date, auctions.starting_price, items.initial_price
         FROM auctions
         INNER JOIN items
-        ON auctions.item_id = items.item_id");
+        ON auctions.item_id = items.item_id
+        WHERE auctions.status = 0 OR auctions.status =2
+        ");
         $items = DB::select(
             "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM auctions)"
         );
@@ -278,6 +279,7 @@ class Admin extends Controller
     }
 
     public function ReportPrint($auction_id){
+        Session::reflash();
         $username = Session::get('username');
         try {
             Admin::updateLevel($username);
@@ -285,8 +287,39 @@ class Admin extends Controller
             return redirect('/admin');
         }
         $level = Session::get('level');
-        $auction_raw = Auction::all()->where('auctionid', '=', $auction_id);
-
+        $auction_raw = Auction::all()->where('auction_id', '=', $auction_id);
+        $auction = [];
+        foreach($auction_raw as $a){
+            $auction = $a;
+        }
+        $items_raw = Item::all()->where('item_id', '=', $auction->item_id);
+        $item = [];
+        foreach($items_raw as $a){
+            $item = $a;
+        }
+        $offers_raw = RunningOffer::all()->where('auction_id', '=', $auction->auction_id);
+        $offer = [];
+        foreach($offers_raw as $a){
+            $offer = $a;
+        }
+        $user_raw = User::all()->where('user_id', '=', $offer->user_id);
+        $user = [];
+        foreach($user_raw as $a){
+            $user = $a;
+        }
+        $history_raw = AuctionHistory::all()->where('auction_id', '=', $auction->auction_id);
+        $history = [];
+        foreach($history_raw as $a){
+            $history = $a;
+        }
+        return view('admin.invoice')->with([
+            'auctions' => $auction,
+            'item' => $item,
+            'offer' => $offer,
+            'user' => $user,
+            'history' => $history,
+            'username' => $username
+        ]);
     }
 
     public function SubjectAdd(Request $request, $subject_name)
@@ -394,13 +427,6 @@ class Admin extends Controller
                 Auction::where('auction_id', '=', $subject_id)->delete();
                 return redirect('/admin/auction');
                 break;
-
-            case 'user':
-                echo "<script>alert('Your action is irrevirsible')</script>";
-                User::where('user_id', '=', $subject_id)->delete();
-                return redirect('/admin/user');
-                break;
-
             case 'employee':
                 echo "<script>alert('Your action is irrevirsible')</script>";
                 Employee::where('employee_id', '=', $subject_id)->delete();
@@ -521,7 +547,7 @@ class Admin extends Controller
         }
     }
 
-    public function SetStatusAs($auction_id, $status){
+    public function finishAuction($auction_id, $status){
         Session::reflash();
         $username = Session::get('username');
         $level = Session::get('level');
@@ -530,71 +556,76 @@ class Admin extends Controller
         } catch (\Throwable $th) {
             return redirect('/admin');
         }
-
-        $auction = [];
-        $offer = [];
-
-        $auction_raw = Auction::all()->where('auction_id', '=', $auction_id);
-        $offer_raw = RunningOffer::all()->where('auction_id', '=', $auction_id);
-        foreach($auction_raw as $i){
-            $auction = $i;
-        }
-
-        foreach($offer_raw as $i){
-            $offer = $i;
-        }
-
-        try {
-            $user_id = $offer->user_id;
-        } catch (\Throwable $th) {
-            Session::flash('code', '101');
-            Session::flash('message', 'Lelang ini belum diisi oleh penawar, tidak dapat diselesaikan');
-            return redirect('/admin/auction');
-        }
-
-        date_default_timezone_set(Session::get('tz'));
-        $date = date('Y-m-d');
-
-        if(isEmpty($offer_raw)){
-            $offer = $auction->starting_price;
-        } else {
-            $offer = [
-                'user_id' => $offer->user_id,
-                'offer_price' => $offer->offer_price];
-        }
-
+        
         if($status = 1){
+            $auction = [];
+            $offer = [];
+    
+            $auction_raw = Auction::all()->where('auction_id', '=', $auction_id);
+            $offer_raw = RunningOffer::all()->where('auction_id', '=', $auction_id);
+            foreach($auction_raw as $i){
+                $auction = $i;
+            }
+    
+            foreach($offer_raw as $i){
+                $offer = $i;
+            }
+    
+            
+            date_default_timezone_set(Session::get('tz'));
+            $date = date('Y-m-d');
             $status_data = [
                 "status" => $status
             ];
-
-            $history_data = [
-                'auction_id' => $auction_id,
-                'item_id' => $auction->item_id,
-                'user_id' => $offer->user_id,
-                'report_date' => $date,
-                'sold_price' => $offer->offer_price
-            ];
+            
+            try {
+                $offers = [
+                    'user_id' => $offer->user_id,
+                    'offer_price' => $offer->offer_price];
+                $user_id = $offers['user_id'];
+                $history_data = [
+                    'auction_id' => $auction_id,
+                    'item_id' => $auction->item_id,
+                    'user_id' => $user_id,
+                    'report_date' => $date,
+                    'sold_price' => $offers['offer_price']
+                ];
+                Session::forget(['message', 'code']);
+            } catch (\Throwable $th) {
+                Session::flash('code', '101');
+                Session::flash('message', 'Lelang barang belum diisi oleh penawar, tidak dapat diselesaikan');
+                return redirect('/admin/auction');
+            };
             Auction::where('auction_id', '=', $auction_id)->update($status_data);
-            AuctionHistory::create($history_data);
-        } else{   
+            try{
+                AuctionHistory::where('auction_id', '=', $auction_id)->delete();
+                AuctionHistory::create($history_data);
+            }catch(\Throwable $th){
+
+                AuctionHistory::create($history_data);
+            }
+            return redirect('/admin/auction');
+    }}
+
+    public function SetStatusAs($auction_id, $status){
+
+        Session::reflash();
+        $username = Session::get('username');
+        $level = Session::get('level');
+        try {
+            Admin::updateLevel($username);
+        } catch (\Throwable $th) {
+            return redirect('/admin');
+        }
+ 
             $status_data =  [
                 "status" => $status
             ];
             Auction::where('auction_id', '=', $auction_id)->update($status_data);
-        }
             return redirect('/admin/auction');
 
     }
 
-    public function SaveAsHistory($auction_id){
-        Session::reflash();
-        $username = Session::get('username');
-        $level = Session::get('level');
-        try {
-            Admin::updateLevel($username);
-        } catch (\Throwable $th) {
-            return redirect('/admin');
-        }
-    }
+   
+
 }

@@ -16,22 +16,16 @@
                         <th>Username</th>
                         <th>Telephone</th>
                         <th>Password</th>
-                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($users as $users)
-                        
                             <tr>
                                 <td>{{$users->user_id}}</td>
                                 <td>{{$users->full_name}}</td>
                                 <td>{{$users->username}}</td>
                                 <td>{{$users->telephone}}</td>
                                 <td>{{$users->password}}</td>
-                                <td>
-                                    <a href="/admin/delete/user/{{$users->user_id}}" class="btn btn-danger me-1"><img src="{{asset('assets/trash-dark.svg')}}" alt="Delete" srcset=""></a>
-                                </td>
-                            </tr>
-                        
+                            </tr>                        
                         @endforeach
                     </tbody>
                 </table>

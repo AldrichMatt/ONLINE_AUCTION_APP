@@ -57,10 +57,10 @@
                                 </td>
                                 <td>
                                     @if($auctions->status == 0)
-                                    <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/1" class="btn btn-warning me-1"><img src="{{asset('/assets/check.svg')}}" alt="" srcset=""></a>
+                                    <a href="/admin/auction/{{$auctions->auction_id}}/finish/1" class="btn btn-warning me-1"><img src="{{asset('/assets/check.svg')}}" alt="" srcset=""></a>
                                     <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/2" class="btn btn-danger me-1"><img src="{{asset('/assets/pause.svg')}}" alt="" srcset=""></a>
                                     @elseif($auctions->status == 1)
-                                    <a href="/admin/auction/invoice/{{$auctions->auction_id}}" class="btn btn-secondary me-1"><img src="{{asset('/assets/printer.svg')}}" alt="" srcset=""></a>
+                                    <a href="/admin/report/invoice/{{$auctions->auction_id}}" class="btn btn-secondary me-1"><img src="{{asset('/assets/printer.svg')}}" alt="" srcset=""></a>
                                     @elseif($auctions->status = 2)
                                     <a href="/admin/auction/{{$auctions->auction_id}}/setstatus/0" class="btn btn-success me-1"><img src="{{asset('/assets/play.svg')}}" alt="" srcset=""></a>
                                     <a href="/admin/delete/auction/{{$auctions->auction_id}}" class="btn btn-danger me-1"><img src="{{asset('/assets/trash-dark.svg')}}" alt="" srcset=""></a>

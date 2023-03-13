@@ -31,15 +31,14 @@ class Offer extends Controller
         $level = Session::get('level');
 
 
-        foreach($items as $item)
-        {
-        $fields[] = array(
-                          'item_name' => $item->item_name,
-                          'image' => $item->image,
-                          'offer_price',
-                          'company_name',
-                          'location',
-                      );
+        foreach ($items as $item) {
+            $fields[] = array(
+                'item_name' => $item->item_name,
+                'image' => $item->image,
+                'offer_price',
+                'company_name',
+                'location',
+            );
         }
 
         if (isset($level)) {
@@ -115,7 +114,7 @@ class Offer extends Controller
         $offer_request = $request->all();
         $offer_price = (string) $offer_request['offer_price'];
 
-        $price_fix = str_replace( ',', '', $offer_price );
+        $price_fix = str_replace(',', '', $offer_price);
 
         if (empty($offer_request['offer_price'])) {
             $message =  'Please fill the price';

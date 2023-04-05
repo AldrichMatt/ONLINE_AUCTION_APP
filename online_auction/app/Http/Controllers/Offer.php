@@ -101,7 +101,10 @@ class Offer extends Controller
     public function Bid(Request $request, $auction_id, $user_id)
     {
         Session::reflash();
+
+        $offer = RunningOffer::all()->where('auction_id',$auction_id);
         $auction = Auction::all()->where('auction_id', $auction_id);
+        $offer_data = [];
         $auction_data = [];
         $item = [];
         foreach ($auction as $a) {
@@ -112,20 +115,31 @@ class Offer extends Controller
         foreach ($item_data as $item) {
             $item_data = $item;
         };
-        $offer_request = $request->all();
-        $offer_price = (string) $offer_request['offer_price'];
+        foreach ($offer as $o) {
+            $offer_data = $o;
+        }
 
-        $price_fix = str_replace( ',', '', $offer_price );
+
+        if(isset($offer_data['offer_price'])){
+            $running_offer = $offer_data['offer_price'];
+        }else{
+            $running_offer = 0;
+        };
+        $offer_request = $request->all();
+
+
+        $offer_price = (int) str_replace( ',', '', $offer_request['offer_price'] );
+        // dd($offer_price > $auction_data->starting_price && $offer_price > $item_data->initial_price);
 
         if (empty($offer_request['offer_price'])) {
             $message =  'Please fill the price';
         } else {
-            if ($offer_price > $auction_data->starting_price && $offer_price > $item_data->initial_price) {
+            if ($offer_price > $auction_data->starting_price && $offer_price > $item_data->initial_price && $offer_price > $running_offer) {
                 $offer_data = [
                     'auction_id' => $auction_id,
                     'user_id' => $user_id,
                     'offer_datetime' => now(),
-                    'offer_price' => $price_fix
+                    'offer_price' => $offer_price
                 ];
                 try {
                     RunningOffer::where('auction_id', '=', $auction_id)->delete();

@@ -18,10 +18,10 @@ class employeeFactory extends Factory
     public function definition()
     {
         return [
-            'employee_name' => fake()->name(),
-            'username' => fake()->userName(),
-            'password' => '123',
-            'level' => 0
+            'employee_name' => 'admin',
+            'username' => 'admin',
+            'password' => '123456',
+            'level' => 2
         ];
     }
 }

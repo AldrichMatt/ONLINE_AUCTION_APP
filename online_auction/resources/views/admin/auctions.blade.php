@@ -92,9 +92,8 @@
       <div class="modal-body">
         <form action="/admin/add/auction" method="post">
             @csrf
-            <div class="row row-cols-2">
-                <div class="col">
-                    <div class="mb-3">
+            <div class="row">
+                <div class="mb-3">
                         <label for="ItemName" class="form-label">Item Name</label>
                         <select class="form-select" name="item_id" id="">
                             @foreach($items as $item)
@@ -106,8 +105,7 @@
                         <input type="hidden" name="status" value="0">
                         <input type="hidden" name="timezone" value="" id="timezone">
                         </div>
-                </div>
-                <div class="col"></div>
+    
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
             <button type="submit" class="btn btn-primary">Create Item</button>

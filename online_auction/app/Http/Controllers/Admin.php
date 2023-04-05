@@ -355,6 +355,11 @@ class Admin extends Controller
                 break;
                 
             case 'auction':
+
+                $auction_data = $request->validate([
+                    'item_id' => 'required'
+                ]);
+
                 $employee_data = Employee::all()->where('employee_name', '=', $request->employee_name);
                 foreach($employee_data as $e){
                     $employee_data = $e;
@@ -570,7 +575,6 @@ class Admin extends Controller
             foreach($offer_raw as $i){
                 $offer = $i;
             }
-    
             
             date_default_timezone_set(Session::get('tz'));
             $date = date('Y-m-d');
@@ -601,7 +605,6 @@ class Admin extends Controller
                 AuctionHistory::where('auction_id', '=', $auction_id)->delete();
                 AuctionHistory::create($history_data);
             }catch(\Throwable $th){
-
                 AuctionHistory::create($history_data);
             }
             return redirect('/admin/auction');

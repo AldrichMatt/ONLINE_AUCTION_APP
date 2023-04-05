@@ -14,7 +14,7 @@
                         <th>Id</th>
                         <th>Image</th>
                         <th>Item name</th>
-                        <th>Company & location</th>
+                        <th>Company/Seller & location</th>
                         <th>Item Price</th>
                         <th>Action</th>
                     </thead>

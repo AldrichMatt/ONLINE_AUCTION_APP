@@ -60,13 +60,10 @@
                 Subtotal : Rp {{number_format($offer->offer_price)}}
             </div>
             <div class="jumbtron h5">
-                Tax 2% : Rp {{number_format($offer->offer_price*2/100)}} 
-            </div>
-            <div class="jumbtron h5">
                 Admin Fee 0.1% : Rp {{number_format($offer->offer_price/100)}}
             </div>
             <div class="jumbtron h5">
-                Total : Rp {{number_format($offer->offer_price/100 + $offer->offer_price*2/100 + $offer->offer_price )}}
+                Total : Rp {{number_format($offer->offer_price/100 + $offer->offer_price )}}
             </div>
         </div>
     </div>
